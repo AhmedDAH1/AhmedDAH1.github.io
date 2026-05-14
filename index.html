@@ -215,6 +215,13 @@
   }
   .chip.green{color:var(--accent-dim);border-color:var(--accent);background:var(--accent-soft)}
 
+  .feat-screenshot{
+    margin-bottom:24px;border:1px solid var(--border);
+    border-radius:6px;overflow:hidden;
+    background:var(--panel-2);
+  }
+  .feat-screenshot img{width:100%;display:block;height:auto}
+
   .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
   @media(max-width:720px){.proj-grid{grid-template-columns:1fr}}
   .card{
@@ -245,6 +252,12 @@
     color:var(--ink);margin-bottom:4px;
   }
   .card .ptag{font-size:12px;color:var(--accent-dim);margin-bottom:12px}
+  .card-screenshot{
+    margin-bottom:14px;border:1px solid var(--border);
+    border-radius:4px;overflow:hidden;
+    background:var(--panel-2);
+  }
+  .card-screenshot img{width:100%;display:block;height:auto}
   .card p{font-size:13px;color:var(--text-dim);margin-bottom:16px;flex:1}
   .card .stack{
     font-size:11.5px;color:var(--text-faint);
@@ -427,6 +440,9 @@
           <span class="chip green">53 tests · 84% coverage</span>
           <span class="chip green">GitHub Actions CI/CD</span>
         </div>
+        <div class="feat-screenshot">
+          <img src="screenshots/soar-lite.png" alt="SOAR-Lite Dashboard Screenshot">
+        </div>
         <div class="cta-row">
           <a class="btn primary" href="https://github.com/AhmedDAH1/soar-lite" target="_blank" rel="noopener">View Code</a>
           <a class="btn" href="https://www.youtube.com/watch?v=Wade9SSN-Ts" target="_blank" rel="noopener">
@@ -461,6 +477,9 @@
         </div>
         <h3>Attack Surface Mapper</h3>
         <div class="ptag">Enterprise Security Assessment Platform</div>
+        <div class="card-screenshot">
+          <img src="screenshots/attack-surface-mapper.png" alt="Attack Surface Mapper Dashboard">
+        </div>
         <p>Automates vulnerability scanning, MITRE ATT&amp;CK mapping across 703 techniques, and compliance checks (PCI-DSS, NIST CSF, CIS v8) — with CLI, terminal dashboard and web UI.</p>
         <div class="stack">stack&nbsp;&rsaquo;&nbsp;<span>Python · Flask-SocketIO · Shodan · MITRE ATT&CK · ReportLab · 23 tests</span></div>
       </div>
@@ -478,6 +497,9 @@
         </div>
         <h3>Email Threat Analyzer</h3>
         <div class="ptag">Phishing Detection Engine</div>
+        <div class="card-screenshot">
+          <img src="screenshots/email-threat-analyzer.png" alt="Email Threat Analyzer Output">
+        </div>
         <p>Parses .eml files and analyzes headers, URLs, attachments and body content. Multi-layer weighted threat scoring (0–100) with VirusTotal integration — tested against the Nazario phishing corpus.</p>
         <div class="stack">stack&nbsp;&rsaquo;&nbsp;<span>Python · email module · VirusTotal API · pytest · 34 tests</span></div>
       </div>
@@ -495,6 +517,9 @@
         </div>
         <h3>Log Threat Detector</h3>
         <div class="ptag">SIEM-Style Log Analysis &amp; Correlation</div>
+        <div class="card-screenshot">
+          <img src="screenshots/log-threat-detector.png" alt="Log Threat Detector Dashboard">
+        </div>
         <p>Ingests SSH, Apache and syslog files to detect brute-force, port scans and anomalies. Correlation engine identifies attack patterns across sources, with a real-time Flask dashboard and email alerting.</p>
         <div class="stack">stack&nbsp;&rsaquo;&nbsp;<span>Python · Flask · SQLite · AbuseIPDB API · Chart.js · 14 tests</span></div>
       </div>
@@ -512,6 +537,9 @@
         </div>
         <h3>Network Scanner</h3>
         <div class="ptag">Multi-Threaded Network Reconnaissance</div>
+        <div class="card-screenshot">
+          <img src="screenshots/network-scanner.png" alt="Network Scanner Results">
+        </div>
         <p>Host discovery, port enumeration and OS fingerprinting built on Scapy with raw sockets. Includes CVE vulnerability lookup integration and a web dashboard for visualizing scan results.</p>
         <div class="stack">stack&nbsp;&rsaquo;&nbsp;<span>Python · Scapy · Raw Sockets · Multi-threading · CVE lookup</span></div>
       </div>
