@@ -3,703 +3,504 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ahmed Dahdouh — Cybersecurity Engineer</title>
-<meta name="description" content="Ahmed Dahdouh — Software Engineering student & aspiring SOC Analyst. Builder of production-grade security tools.">
+<title>Ahmed Dahdouh — Security Engineering Portfolio</title>
+<meta name="description" content="Ahmed Dahdouh — Software Engineering student and SOC analyst candidate. Five security tools, four deployed as live demos, with automated tests, Docker, and CI/CD.">
 
-<!-- Open Graph / Social Media Preview -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ahmeddah1.github.io">
-<meta property="og:title" content="Ahmed Dahdouh — Cybersecurity Engineer & SOC Analyst">
-<meta property="og:description" content="Building production-grade security tools: SOAR automation, phishing detection, log analysis & network scanning. 150+ tests, 80%+ coverage, full CI/CD.">
+<meta property="og:title" content="Ahmed Dahdouh — Security Engineering Portfolio">
+<meta property="og:description" content="SOC analyst candidate. Five security tools — SOAR automation, phishing detection, log correlation, network reconnaissance — four live, all with tests, Docker, and CI/CD.">
 <meta property="og:image" content="https://ahmeddah1.github.io/profile.jpg">
-
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://ahmeddah1.github.io">
-<meta name="twitter:title" content="Ahmed Dahdouh — Cybersecurity Engineer & SOC Analyst">
-<meta name="twitter:description" content="Building production-grade security tools: SOAR automation, phishing detection, log analysis & network scanning. 150+ tests, 80%+ coverage, full CI/CD.">
+<meta name="twitter:title" content="Ahmed Dahdouh — Security Engineering Portfolio">
+<meta name="twitter:description" content="SOC analyst candidate. Five security tools, four deployed as live demos, with automated tests, Docker, and CI/CD.">
 <meta name="twitter:image" content="https://ahmeddah1.github.io/profile.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
   :root{
-    --bg:#f4f3ee;
-    --bg-soft:#fbfaf7;
-    --panel:#ffffff;
-    --panel-2:#f7f6f1;
-    --border:#e2e0d6;
-    --border-bright:#cfccbe;
-    --text:#21251f;
-    --text-mid:#4a5048;
-    --text-dim:#6f756b;
-    --text-faint:#9a9e93;
-    --accent:#0f8f5f;
-    --accent-soft:#e4f3ec;
-    --accent-dim:#0c7a51;
-    --amber:#b9740a;
-    --amber-soft:#fbeede;
-    --ink:#1a1f17;
-    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-    --display:'Syne',sans-serif;
+    --paper:#f3efe6;
+    --paper-2:#ece6d9;
+    --card:#f8f5ee;
+    --rule:#d8d0bf;
+    --rule-dk:#bdb29a;
+    --ink:#1c1a17;
+    --ink-soft:#4a463e;
+    --ink-faint:#8a8270;
+    --ox:#7d2b2b;
+    --ox-bright:#9c3535;
+    --serif:'Newsreader',Georgia,serif;
+    --sans:'IBM Plex Sans',sans-serif;
+    --mono:'IBM Plex Mono',monospace;
   }
 
   html{scroll-behavior:smooth}
   body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:var(--mono);
-    font-size:15px;
-    line-height:1.7;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.65;
     -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-
-  body::before{
-    content:"";
-    position:fixed;inset:0;
-    background-image:
-      linear-gradient(var(--border) 1px,transparent 1px),
-      linear-gradient(90deg,var(--border) 1px,transparent 1px);
-    background-size:54px 54px;
-    opacity:.5;
-    pointer-events:none;
-    z-index:0;
-    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 25%,transparent 80%);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
   }
 
   a{color:inherit;text-decoration:none}
-  ::selection{background:var(--accent);color:#fff}
+  ::selection{background:var(--ox);color:var(--paper)}
 
-  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+  .shell{max-width:1180px;margin:0 auto;padding:0 40px}
+  @media(max-width:680px){.shell{padding:0 22px}}
 
-  nav{
-    position:sticky;top:0;z-index:50;
-    backdrop-filter:blur(10px);
-    background:rgba(244,243,238,.85);
-    border-bottom:1px solid var(--border);
+  /* ── Masthead ── */
+  .masthead{
+    border-bottom:2px solid var(--ink);
+    padding:22px 0 14px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:20px;flex-wrap:wrap;
   }
-  .nav-inner{
-    max-width:1080px;margin:0 auto;padding:14px 28px;
-    display:flex;align-items:center;justify-content:space-between;
-  }
-  .brand{font-weight:700;letter-spacing:.02em;color:var(--text);font-size:14px}
-  .brand .blink{color:var(--accent)}
-  .nav-links{display:flex;gap:26px;font-size:13px}
-  .nav-links a{color:var(--text-dim);transition:color .15s}
-  .nav-links a:hover{color:var(--accent)}
-  .nav-links a::before{content:"// ";color:var(--text-faint)}
-  @media(max-width:640px){.nav-links{display:none}}
+  .masthead .ident{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+  .masthead .issue{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint);text-align:right}
 
-  header{padding:80px 0 72px;position:relative}
-  .hero-grid{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
-  @media(max-width:760px){
-    .hero-grid{grid-template-columns:1fr;gap:32px}
-    .hero-photo{order:-1}
-  }
+  /* ── Hero ── */
+  .hero{padding:64px 0 56px;border-bottom:1px solid var(--rule)}
+  .hero-grid{display:grid;grid-template-columns:1fr 220px;gap:54px;align-items:start}
+  @media(max-width:820px){.hero-grid{grid-template-columns:1fr;gap:34px}.hero-photo{order:-1}}
 
-  .term-tag{
-    display:inline-flex;align-items:center;gap:8px;
-    font-size:12px;color:var(--accent-dim);
-    border:1px solid var(--accent);
-    background:var(--accent-soft);
-    padding:5px 12px;border-radius:3px;
-    margin-bottom:24px;letter-spacing:.04em;
+  .kicker{
+    font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ox);margin-bottom:22px;display:flex;align-items:center;gap:10px;
   }
-  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);
-    box-shadow:0 0 7px var(--accent);animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .kicker::before{content:"";width:30px;height:1px;background:var(--ox)}
 
   h1{
-    font-family:var(--display);
-    font-size:clamp(40px,6.4vw,68px);
-    line-height:1.03;font-weight:800;letter-spacing:-.02em;
-    color:var(--ink);margin-bottom:8px;
+    font-family:var(--serif);font-weight:500;
+    font-size:clamp(46px,8vw,86px);line-height:.98;letter-spacing:-.015em;
+    color:var(--ink);margin-bottom:20px;
   }
-  .role{
-    font-family:var(--display);
-    font-size:clamp(19px,2.8vw,27px);
-    font-weight:600;color:var(--accent);margin-bottom:22px;
+  h1 em{font-style:italic;color:var(--ox)}
+
+  .standfirst{
+    font-family:var(--serif);font-size:clamp(19px,2.4vw,23px);
+    line-height:1.5;color:var(--ink-soft);max-width:620px;font-weight:400;
   }
-  .role .sep{color:var(--text-faint);margin:0 10px;font-weight:400}
-  .lede{max-width:600px;color:var(--text-mid);font-size:14.5px;margin-bottom:30px}
-  .lede b{color:var(--text);font-weight:500}
+  .standfirst b{color:var(--ink);font-weight:600;font-style:italic}
+
+  .byline{
+    margin-top:30px;font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);
+    display:flex;flex-wrap:wrap;gap:8px 18px;
+  }
+  .byline span{color:var(--ink-soft)}
+
+  .hero-actions{margin-top:30px;display:flex;flex-wrap:wrap;gap:0}
+  .hero-actions a{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;
+    padding:11px 18px;border:1px solid var(--rule-dk);margin:-1px 0 0 -1px;
+    transition:background .15s,color .15s;background:var(--card);
+  }
+  .hero-actions a:hover{background:var(--ink);color:var(--paper)}
+  .hero-actions a.lead{background:var(--ox);color:var(--paper);border-color:var(--ox)}
+  .hero-actions a.lead:hover{background:var(--ox-bright)}
 
   .hero-photo{position:relative}
-  .photo-frame{
-    width:210px;height:210px;border-radius:50%;
-    border:1px solid var(--border-bright);
-    padding:7px;background:var(--panel);
-    box-shadow:0 14px 40px -16px rgba(20,30,18,.3);
-    position:relative;
+  .hero-photo img{
+    width:100%;aspect-ratio:1/1.12;object-fit:cover;
+    filter:grayscale(1) contrast(1.04);
+    border:1px solid var(--ink);
   }
-  .photo-frame::after{
-    content:"";position:absolute;inset:-1px;border-radius:50%;
-    border:2px solid var(--accent);
-    clip-path:polygon(0 0,38% 0,38% 6%,6% 6%,6% 38%,0 38%);
+  .hero-photo figcaption{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+    color:var(--ink-faint);margin-top:8px;text-transform:uppercase;
+    display:flex;justify-content:space-between;
   }
-  .photo-frame img{
-    width:100%;height:100%;border-radius:50%;
-    object-fit:cover;display:block;
-  }
-  .photo-cap{
-    position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
-    background:var(--ink);color:var(--bg-soft);
-    font-size:10.5px;padding:3px 11px;border-radius:3px;
-    letter-spacing:.05em;white-space:nowrap;
-  }
-  @media(max-width:760px){.photo-frame{width:160px;height:160px}}
 
-  .cta-row{display:flex;flex-wrap:wrap;gap:12px}
-  .btn{
-    display:inline-flex;align-items:center;gap:9px;
-    font-family:var(--mono);font-size:13px;font-weight:500;
-    padding:11px 18px;border-radius:4px;
-    border:1px solid var(--border-bright);
-    background:var(--panel);color:var(--text);
-    transition:all .16s ease;
-  }
-  .btn svg{width:15px;height:15px}
-  .btn:hover{border-color:var(--accent);color:var(--accent-dim);transform:translateY(-2px)}
-  .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
-  .btn.primary:hover{background:var(--accent-dim);color:#fff;box-shadow:0 8px 22px -10px var(--accent)}
-
-  section{padding:58px 0;position:relative}
+  /* ── Section scaffolding ── */
+  section{padding:60px 0;border-bottom:1px solid var(--rule)}
   .sec-head{
-    display:flex;align-items:baseline;gap:14px;margin-bottom:34px;
-    border-bottom:1px solid var(--border);padding-bottom:14px;
+    display:grid;grid-template-columns:60px 1fr;gap:18px;
+    align-items:baseline;margin-bottom:42px;
   }
-  .sec-num{font-size:13px;color:var(--accent);font-weight:700}
-  .sec-title{
-    font-family:var(--display);font-size:25px;font-weight:700;
-    color:var(--ink);letter-spacing:-.01em;
-  }
-  .sec-meta{margin-left:auto;font-size:12px;color:var(--text-faint)}
+  .sec-no{font-family:var(--mono);font-size:13px;color:var(--ox);padding-top:6px}
+  .sec-title{font-family:var(--serif);font-size:clamp(26px,3.4vw,34px);font-weight:500;letter-spacing:-.01em}
+  .sec-note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-top:4px}
 
-  .stats{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
-    background:var(--border);border:1px solid var(--border);
-    border-radius:6px;overflow:hidden;
+  /* ── Summary stats as a ledger line ── */
+  .ledger{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
   }
-  .stat{background:var(--panel);padding:24px 20px}
-  .stat .n{
-    font-family:var(--display);font-size:33px;font-weight:800;
-    color:var(--accent);line-height:1;
-  }
-  .stat .l{font-size:12px;color:var(--text-dim);margin-top:8px}
-  @media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:680px){.ledger{grid-template-columns:repeat(2,1fr)}}
+  .ledger .cell{padding:22px 18px;border-left:1px solid var(--rule)}
+  .ledger .cell:first-child{border-left:none}
+  @media(max-width:680px){.ledger .cell:nth-child(3){border-left:none}}
+  .ledger .fig{font-family:var(--serif);font-size:38px;font-weight:500;line-height:1;color:var(--ox)}
+  .ledger .cap{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ink-soft);margin-top:10px;line-height:1.4}
 
-  .featured{
-    border:1px solid var(--border-bright);border-radius:8px;
-    background:var(--panel);overflow:hidden;
-    box-shadow:0 10px 36px -22px rgba(20,30,18,.35);
+  /* ── Featured (lead story) ── */
+  .lead-story{display:grid;grid-template-columns:1.55fr 1fr;gap:44px;align-items:start}
+  @media(max-width:820px){.lead-story{grid-template-columns:1fr;gap:26px}}
+  .lead-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ox);margin-bottom:14px}
+  .lead-title{font-family:var(--serif);font-size:clamp(32px,4.4vw,46px);font-weight:500;line-height:1.02;letter-spacing:-.015em;margin-bottom:8px}
+  .lead-sub{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--ink-soft);margin-bottom:22px}
+  .lead-body{font-size:15.5px;color:var(--ink-soft);margin-bottom:22px}
+  .lead-body strong{color:var(--ink);font-weight:600}
+  .dropcap::first-letter{
+    font-family:var(--serif);float:left;font-size:62px;line-height:.78;
+    padding:6px 10px 0 0;color:var(--ox);font-weight:500;
   }
-  .feat-bar{
-    display:flex;align-items:center;gap:8px;
-    padding:11px 16px;border-bottom:1px solid var(--border);
-    background:var(--panel-2);
+  .spec{list-style:none;border-top:1px solid var(--rule);margin-bottom:24px}
+  .spec li{
+    display:grid;grid-template-columns:130px 1fr;gap:14px;
+    padding:9px 0;border-bottom:1px solid var(--rule);font-size:13.5px;
   }
-  .tdot{width:11px;height:11px;border-radius:50%}
-  .tdot.r{background:#ed6a5e}.tdot.y{background:#f5bd4f}.tdot.g{background:#62c554}
-  .feat-path{margin-left:10px;font-size:12px;color:var(--text-faint)}
-  .feat-body{padding:32px 30px}
-  .feat-flag{font-size:12px;color:var(--amber);letter-spacing:.05em;margin-bottom:10px}
-  .feat-title{
-    font-family:var(--display);font-size:29px;font-weight:800;
-    color:var(--ink);margin-bottom:6px;letter-spacing:-.01em;
-  }
-  .feat-sub{color:var(--text-dim);font-size:14px;margin-bottom:22px}
-  .feat-desc{color:var(--text-mid);font-size:14.5px;margin-bottom:20px;max-width:680px}
-  .feat-desc .hl{color:var(--accent-dim);font-weight:500}
-  .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px;margin-bottom:26px}
-  @media(max-width:600px){.feat-grid{grid-template-columns:1fr}}
-  .feat-grid li{
-    list-style:none;font-size:13.5px;color:var(--text-mid);
-    padding-left:20px;position:relative;
-  }
-  .feat-grid li::before{content:"▸";position:absolute;left:0;color:var(--accent)}
-  .feat-grid li b{color:var(--text);font-weight:500}
-  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
-  .chip{
-    font-size:11.5px;color:var(--text-mid);
-    border:1px solid var(--border);background:var(--panel-2);
-    padding:4px 10px;border-radius:3px;
-  }
-  .chip.green{color:var(--accent-dim);border-color:var(--accent);background:var(--accent-soft)}
+  .spec li .k{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint)}
+  .spec li .v{color:var(--ink-soft)}
+  .spec li .v b{color:var(--ink);font-weight:600}
 
-  .feat-screenshot{
-    margin-bottom:24px;border:1px solid var(--border);
-    border-radius:6px;overflow:hidden;
-    background:var(--panel-2);
+  .lead-aside{
+    background:var(--card);border:1px solid var(--rule-dk);
+    padding:0;position:relative;
   }
-  .feat-screenshot img{width:100%;display:block;height:auto}
+  .lead-aside .shot{width:100%;display:block;border-bottom:1px solid var(--rule-dk);filter:contrast(1.02)}
+  .lead-aside .aside-pad{padding:18px 20px}
+  .lead-aside .aside-pad .m{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.05em}
 
-  .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-  @media(max-width:720px){.proj-grid{grid-template-columns:1fr}}
-  .card{
-    border:1px solid var(--border);border-radius:7px;
-    background:var(--panel);padding:24px 22px;
-    display:flex;flex-direction:column;
-    transition:border-color .18s,transform .18s,box-shadow .18s;
-    position:relative;
+  .actions{display:flex;flex-wrap:wrap;gap:0;margin-top:4px}
+  .actions a{
+    font-family:var(--mono);font-size:12px;letter-spacing:.02em;
+    padding:10px 15px;border:1px solid var(--rule-dk);margin:-1px 0 0 -1px;
+    transition:background .15s,color .15s;
   }
-  .card:hover{
-    border-color:var(--border-bright);transform:translateY(-3px);
-    box-shadow:0 12px 30px -20px rgba(20,30,18,.4);
-  }
-  .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-  .card-icon{
-    width:34px;height:34px;border-radius:6px;
-    background:var(--accent-soft);border:1px solid var(--border);
-    display:flex;align-items:center;justify-content:center;
-    color:var(--accent-dim);
-  }
-  .card-icon svg{width:17px;height:17px}
-  .card-links{display:flex;gap:12px}
-  .card-links a{color:var(--text-faint);transition:color .15s}
-  .card-links a:hover{color:var(--accent)}
-  .card-links svg{width:16px;height:16px;display:block}
-  .card h3{
-    font-family:var(--display);font-size:18px;font-weight:700;
-    color:var(--ink);margin-bottom:4px;
-  }
-  .card .ptag{font-size:12px;color:var(--accent-dim);margin-bottom:12px}
-  .card-screenshot{
-    margin-bottom:14px;border:1px solid var(--border);
-    border-radius:4px;overflow:hidden;
-    background:var(--panel-2);
-  }
-  .card-screenshot img{width:100%;display:block;height:auto}
-  .card p{font-size:13px;color:var(--text-dim);margin-bottom:16px;flex:1}
-  .card .stack{
-    font-size:11.5px;color:var(--text-faint);
-    border-top:1px solid var(--border);padding-top:12px;
-  }
-  .card .stack span{color:var(--text-dim)}
+  .actions a:hover{background:var(--ink);color:var(--paper)}
+  .actions a.live{background:var(--ox);color:var(--paper);border-color:var(--ox)}
+  .actions a.live:hover{background:var(--ox-bright)}
 
-  .skill-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  @media(max-width:720px){.skill-cols{grid-template-columns:1fr}}
-  .skill-block{
-    border:1px solid var(--border);border-radius:7px;
-    background:var(--panel);padding:22px 20px;
+  /* ── Project entries (case files) ── */
+  .entry{
+    display:grid;grid-template-columns:60px 1fr;gap:18px;
+    padding:34px 0;border-bottom:1px solid var(--rule);
   }
-  .skill-block h4{
-    font-size:12px;color:var(--accent-dim);font-weight:700;
-    letter-spacing:.04em;margin-bottom:14px;
+  .entry:last-child{border-bottom:none}
+  .entry-no{font-family:var(--mono);font-size:13px;color:var(--ox);padding-top:5px}
+  .entry-h{display:flex;justify-content:space-between;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:4px}
+  .entry-name{font-family:var(--serif);font-size:25px;font-weight:500;letter-spacing:-.01em}
+  .entry-kind{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .entry-desc{font-size:14.5px;color:var(--ink-soft);max-width:680px;margin-bottom:14px}
+  .entry-desc .hl{color:var(--ox);font-weight:600}
+  .entry-foot{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  .entry-stack{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)}
+  .entry-links{display:flex;gap:0}
+  .entry-links a{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;
+    padding:7px 13px;border:1px solid var(--rule-dk);margin-left:-1px;
+    transition:background .15s,color .15s;
   }
-  .skill-block h4::before{content:"$ ";color:var(--text-faint)}
-  .tag-cloud{display:flex;flex-wrap:wrap;gap:7px}
-  .tg{
-    font-size:11.5px;color:var(--text-mid);
-    background:var(--panel-2);border:1px solid var(--border);
-    padding:4px 9px;border-radius:3px;
-  }
+  .entry-links a:hover{background:var(--ink);color:var(--paper)}
+  .entry-links a.live{color:var(--ox);border-color:var(--ox)}
+  .entry-links a.live:hover{background:var(--ox);color:var(--paper)}
 
-  .edu-wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:18px}
-  @media(max-width:680px){.edu-wrap{grid-template-columns:1fr}}
-  .edu-card{
-    border:1px solid var(--border);border-radius:7px;
-    background:var(--panel);padding:24px 22px;
-  }
-  .edu-card h4{
-    font-family:var(--display);font-size:17px;color:var(--ink);
-    font-weight:700;margin-bottom:4px;
-  }
-  .edu-card .when{font-size:12px;color:var(--text-faint);margin-bottom:14px}
-  .edu-card p{font-size:13px;color:var(--text-dim)}
-  .cert-row{
-    display:flex;align-items:center;gap:10px;
-    font-size:13px;padding:9px 0;border-bottom:1px solid var(--border);
-  }
-  .cert-row:last-child{border-bottom:none}
-  .badge{font-size:10.5px;padding:2px 8px;border-radius:3px;font-weight:500;white-space:nowrap}
-  .badge.prog{background:var(--amber-soft);color:var(--amber);border:1px solid #eccfa3}
-  .badge.done{background:var(--accent-soft);color:var(--accent-dim);border:1px solid var(--accent)}
-  .badge.next{background:var(--panel-2);color:var(--text-dim);border:1px solid var(--border-bright)}
-  .cert-row .cn{color:var(--text)}
+  /* ── Skills / credentials two-up ── */
+  .two-up{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+  @media(max-width:760px){.two-up{grid-template-columns:1fr;gap:38px}}
+  .field h4{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ox);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+  .field p{font-size:14px;color:var(--ink-soft);margin-bottom:18px}
+  .field p:last-child{margin-bottom:0}
+  .field p .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);display:block;margin-bottom:3px}
 
-  .contact-box{
-    border:1px solid var(--border-bright);border-radius:8px;
-    background:var(--panel);padding:46px 36px;text-align:center;
-    box-shadow:0 12px 36px -24px rgba(20,30,18,.4);
-  }
-  .contact-box h2{
-    font-family:var(--display);font-size:29px;font-weight:800;
-    color:var(--ink);margin-bottom:10px;
-  }
-  .contact-box p{
-    color:var(--text-dim);font-size:14px;margin-bottom:28px;
-    max-width:480px;margin-left:auto;margin-right:auto;
-  }
-  .contact-links{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+  .cred{list-style:none}
+  .cred li{display:flex;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--rule);font-size:14px}
+  .cred li:last-child{border-bottom:none}
+  .cred .st{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 8px;white-space:nowrap;border:1px solid currentColor}
+  .cred .st.prog{color:var(--ox)}
+  .cred .st.done{color:var(--ink-soft)}
+  .cred .st.next{color:var(--ink-faint)}
 
-  footer{border-top:1px solid var(--border);padding:28px 0 40px;margin-top:48px}
-  .foot-inner{
-    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
-    font-size:12px;color:var(--text-faint);
-  }
-  .foot-inner .ok{color:var(--accent)}
+  /* ── Colophon / contact ── */
+  .colophon{padding:64px 0 30px}
+  .colophon h2{font-family:var(--serif);font-size:clamp(30px,5vw,52px);font-weight:500;letter-spacing:-.015em;margin-bottom:16px;max-width:14ch}
+  .colophon h2 em{font-style:italic;color:var(--ox)}
+  .colophon p{font-size:16px;color:var(--ink-soft);max-width:540px;margin-bottom:30px}
+  .colophon .actions a{font-size:13px;padding:12px 20px}
 
-  .reveal{opacity:0;transform:translateY(22px);
-    transition:opacity .6s ease,transform .6s ease}
-  .reveal.in{opacity:1;transform:none}
+  footer{border-top:2px solid var(--ink);padding:18px 0 50px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ink-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 </style>
 </head>
 <body>
+<div class="shell">
 
-<nav>
-  <div class="nav-inner">
-    <div class="brand">ahmed@dahdouh:~<span class="blink">$</span></div>
-    <div class="nav-links">
-      <a href="#stats">metrics</a>
-      <a href="#featured">featured</a>
-      <a href="#projects">projects</a>
-      <a href="#skills">skills</a>
-      <a href="#contact">contact</a>
-    </div>
+  <div class="masthead">
+    <div class="ident">Ahmed Dahdouh — Security Engineering Dossier</div>
+    <div class="issue">Zhengzhou, CN · Updated 2026 · Open to SOC roles</div>
   </div>
-</nav>
 
-<header>
-  <div class="wrap">
+  <header class="hero">
     <div class="hero-grid">
-      <div class="hero-text">
-        <div class="term-tag"><span class="dot"></span>AVAILABLE NOW — SOC ANALYST INTERNSHIP / FULL-TIME 2027</div>
-        <h1>Ahmed Dahdouh</h1>
-        <div class="role">Cybersecurity Engineer<span class="sep">/</span>SOC Analyst</div>
-        <p class="lede">
-          Software Engineering student at <b>Zhengzhou University</b>, graduating 2027.
+      <div>
+        <div class="kicker">SOC Analyst &amp; Blue-Team Engineer</div>
+        <h1>Ahmed<br>Dahdouh</h1>
+        <p class="standfirst">
           I build <b>production-grade security tools</b> — SOAR automation, phishing
-          detection, log analysis and network reconnaissance — with real threat
-          intelligence integration, full test coverage and CI/CD on every project.
+          detection, log correlation and network reconnaissance — with real
+          threat-intelligence integration, automated tests, and CI/CD on every project.
         </p>
-        <div class="cta-row">
-          <a class="btn primary" href="https://github.com/AhmedDAH1" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.44 9.63 8.21 11.19.6.11.82-.25.82-.56v-2.2c-3.34.71-4.04-1.58-4.04-1.58-.55-1.37-1.34-1.74-1.34-1.74-1.09-.73.08-.72.08-.72 1.21.08 1.84 1.22 1.84 1.22 1.07 1.8 2.81 1.28 3.5.98.11-.76.42-1.28.76-1.58-2.67-.3-5.47-1.31-5.47-5.81 0-1.28.47-2.33 1.24-3.15-.13-.3-.54-1.51.12-3.15 0 0 1.01-.32 3.3 1.2.96-.26 1.98-.39 3-.4 1.02 0 2.04.14 3 .4 2.29-1.52 3.3-1.2 3.3-1.2.66 1.64.25 2.85.12 3.15.77.82 1.24 1.87 1.24 3.15 0 4.51-2.81 5.5-5.49 5.79.43.36.81 1.08.81 2.18v3.23c0 .31.21.68.83.56C20.57 21.91 24 17.5 24 12.29 24 5.78 18.63.5 12 .5Z"/></svg>
-            View GitHub
-          </a>
-          <a class="btn" href="https://www.linkedin.com/in/ahmed-dahdouh" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
-            LinkedIn &amp; Certificates
-          </a>
-          <a class="btn" href="mailto:adahdouh123@gmail.com">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-            Email
-          </a>
-          <a class="btn" href="Ahmed_Dahdouh_Resume.pdf" download>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>
-            Download Resume
-          </a>
+        <div class="byline">
+          <span>Software Engineering, Zhengzhou University</span> · <span>Graduating 2027</span> · <span>CompTIA Security+ in progress</span>
         </div>
+        <nav class="hero-actions">
+          <a class="lead" href="#work">Read the work ↓</a>
+          <a href="https://github.com/AhmedDAH1" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/ahmed-dahdouh" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="Ahmed_Dahdouh_Resume.pdf" download>Résumé (PDF)</a>
+        </nav>
       </div>
-      <div class="hero-photo">
-        <div class="photo-frame">
-          <img src="profile.jpg" alt="Ahmed Dahdouh">
-          <span class="photo-cap">OPEN TO HIRE</span>
-        </div>
-      </div>
+      <figure class="hero-photo">
+        <img src="profile.jpg" alt="Ahmed Dahdouh">
+        <figcaption><span>A. Dahdouh</span><span>Open to work</span></figcaption>
+      </figure>
     </div>
-  </div>
-</header>
+  </header>
 
-<section id="stats">
-  <div class="wrap reveal">
-    <div class="sec-head">
-      <span class="sec-num">01</span>
-      <span class="sec-title">Portfolio Metrics</span>
-      <span class="sec-meta">// verified across repositories</span>
+  <section id="summary">
+    <div class="ledger">
+      <div class="cell"><div class="fig">5</div><div class="cap">Security tools<br>shipped</div></div>
+      <div class="cell"><div class="fig">4</div><div class="cap">Deployed as<br>live demos</div></div>
+      <div class="cell"><div class="fig">120+</div><div class="cap">Automated tests<br>across repos</div></div>
+      <div class="cell"><div class="fig">100%</div><div class="cap">Dockerized,<br>CI/CD on every repo</div></div>
     </div>
-    <div class="stats">
-      <div class="stat"><div class="n">4</div><div class="l">Production security tools shipped</div></div>
-      <div class="stat"><div class="n">150+</div><div class="l">Automated tests written</div></div>
-      <div class="stat"><div class="n">80%+</div><div class="l">Average test coverage</div></div>
-      <div class="stat"><div class="n">10k+</div><div class="l">Lines of code, all CI/CD-backed</div></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section id="featured">
-  <div class="wrap reveal">
+  <section id="work">
     <div class="sec-head">
-      <span class="sec-num">02</span>
-      <span class="sec-title">Featured Project</span>
-      <span class="sec-meta">// flagship build</span>
-    </div>
-    <div class="featured">
-      <div class="feat-bar">
-        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
-        <span class="feat-path">~/AhmedDAH1/soar-lite — main</span>
+      <div class="sec-no">01</div>
+      <div>
+        <div class="sec-title">Lead Project</div>
+        <div class="sec-note">// flagship — security orchestration, automation &amp; response</div>
       </div>
-      <div class="feat-body">
-        <div class="feat-flag">★ FLAGSHIP — SECURITY ORCHESTRATION, AUTOMATION &amp; RESPONSE</div>
-        <div class="feat-title">SOAR-Lite</div>
-        <div class="feat-sub">A SOAR platform that automates the full SOC workflow — from alert ingestion to final report.</div>
-        <p class="feat-desc">
-          SOC analysts spend hours on repetitive triage: checking if IPs are malicious,
-          escalating incidents, copy-pasting data into reports. SOAR-Lite automates the
-          entire chain and <span class="hl">cuts incident response time from 30+ minutes to under 2</span>.
+    </div>
+
+    <article class="lead-story">
+      <div>
+        <div class="lead-label">SOAR-Lite</div>
+        <h3 class="lead-title">Automating the SOC triage loop, end to end.</h3>
+        <div class="lead-sub">From webhook alert to finished incident report — without the manual copy-paste.</div>
+        <p class="lead-body dropcap">
+          SOC analysts lose hours to repetitive triage: checking whether an IP is malicious,
+          escalating incidents by hand, pasting indicators into reports. SOAR-Lite runs that
+          chain automatically — ingest, extract, enrich, decide, act, document — and
+          <strong>cuts simulated response time from 30+ minutes to under two</strong>.
         </p>
-        <ul class="feat-grid">
-          <li><b>Alert ingestion</b> — webhooks from SIEM / EDR / email gateways</li>
-          <li><b>IOC extraction</b> — regex parsing of IPs, domains, hashes, emails</li>
-          <li><b>Threat intelligence</b> — async calls to VirusTotal &amp; AbuseIPDB</li>
-          <li><b>Automated playbooks</b> — YAML rules auto-escalate &amp; tag incidents</li>
-          <li><b>Web dashboard</b> — real-time SOC metrics with Chart.js</li>
-          <li><b>Report generation</b> — one-click PDF / DOCX executive summaries</li>
+        <ul class="spec">
+          <li><span class="k">Ingestion</span><span class="v">Webhooks from SIEM, EDR, and email-gateway formats</span></li>
+          <li><span class="k">Extraction</span><span class="v">Regex IOC parsing — IPs, domains, hashes, emails</span></li>
+          <li><span class="k">Enrichment</span><span class="v">Async VirusTotal &amp; AbuseIPDB lookups</span></li>
+          <li><span class="k">Automation</span><span class="v">YAML playbook engine auto-escalates &amp; tags</span></li>
+          <li><span class="k">Output</span><span class="v">One-click PDF / DOCX executive reports</span></li>
+          <li><span class="k">Verification</span><span class="v"><b>53 tests · 84% coverage · GitHub Actions</b></span></li>
         </ul>
-        <div class="chips">
-          <span class="chip">Python 3.10</span>
-          <span class="chip">FastAPI</span>
-          <span class="chip">PostgreSQL</span>
-          <span class="chip">SQLAlchemy</span>
-          <span class="chip">Docker</span>
-          <span class="chip green">53 tests · 84% coverage</span>
-          <span class="chip green">GitHub Actions CI/CD</span>
-        </div>
-        <div class="feat-screenshot">
-          <img src="screenshots/soar-lite.png" alt="SOAR-Lite Dashboard Screenshot">
-        </div>
-        <div class="cta-row">
-          <a class="btn primary" href="https://github.com/AhmedDAH1/soar-lite" target="_blank" rel="noopener">View Code</a>
-          <a class="btn" href="https://www.youtube.com/watch?v=Wade9SSN-Ts" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            Watch 6-min Demo
-          </a>
+        <div class="actions">
+          <a class="live" href="https://soar-lite.onrender.com" target="_blank" rel="noopener">Live demo ↗</a>
+          <a href="https://youtu.be/Wade9SSN-Ts" target="_blank" rel="noopener">6-min walkthrough</a>
+          <a href="https://github.com/AhmedDAH1/soar-lite" target="_blank" rel="noopener">Source</a>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+      <aside class="lead-aside">
+        <img class="shot" src="screenshots/soar-lite.png" alt="SOAR-Lite dashboard">
+        <div class="aside-pad">
+          <div class="m">FastAPI · SQLAlchemy · Alembic · PostgreSQL / SQLite · Docker · gunicorn</div>
+        </div>
+      </aside>
+    </article>
+  </section>
 
-<section id="projects">
-  <div class="wrap reveal">
+  <section id="projects">
     <div class="sec-head">
-      <span class="sec-num">03</span>
-      <span class="sec-title">Security Projects</span>
-      <span class="sec-meta">// 4 more on GitHub</span>
+      <div class="sec-no">02</div>
+      <div>
+        <div class="sec-title">Selected Work</div>
+        <div class="sec-note">// four more, three of them live</div>
+      </div>
     </div>
-    <div class="proj-grid">
 
-      <div class="card">
-        <div class="card-top">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
-          </div>
-          <div class="card-links">
-            <a href="https://github.com/AhmedDAH1/attack-surface-mapper" target="_blank" rel="noopener" aria-label="GitHub repo">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.44 9.63 8.21 11.19.6.11.82-.25.82-.56v-2.2c-3.34.71-4.04-1.58-4.04-1.58-.55-1.37-1.34-1.74-1.34-1.74-1.09-.73.08-.72.08-.72 1.21.08 1.84 1.22 1.84 1.22 1.07 1.8 2.81 1.28 3.5.98.11-.76.42-1.28.76-1.58-2.67-.3-5.47-1.31-5.47-5.81 0-1.28.47-2.33 1.24-3.15-.13-.3-.54-1.51.12-3.15 0 0 1.01-.32 3.3 1.2.96-.26 1.98-.39 3-.4 1.02 0 2.04.14 3 .4 2.29-1.52 3.3-1.2 3.3-1.2.66 1.64.25 2.85.12 3.15.77.82 1.24 1.87 1.24 3.15 0 4.51-2.81 5.5-5.49 5.79.43.36.81 1.08.81 2.18v3.23c0 .31.21.68.83.56C20.57 21.91 24 17.5 24 12.29 24 5.78 18.63.5 12 .5Z"/></svg>
-            </a>
+    <article class="entry">
+      <div class="entry-no">02·1</div>
+      <div>
+        <div class="entry-h">
+          <div class="entry-name">Email Threat Analyzer</div>
+          <div class="entry-kind">Phishing Detection Engine</div>
+        </div>
+        <p class="entry-desc">
+          A live web tool: paste any <code>.eml</code> and watch it scored 0–100 across header,
+          URL, attachment and content analyzers. <span class="hl">Validated at 73% detection on the
+          Nazario phishing corpus</span> (414 real-world emails), with a labeled benign control
+          proving low false-positive behaviour.
+        </p>
+        <div class="entry-foot">
+          <div class="entry-stack">Python · Flask · Docker · gunicorn · VirusTotal · 34 tests</div>
+          <div class="entry-links">
+            <a class="live" href="https://email-threat-analyzer-zt7f.onrender.com" target="_blank" rel="noopener">Live demo ↗</a>
+            <a href="https://github.com/AhmedDAH1/email-threat-analyzer" target="_blank" rel="noopener">Source</a>
           </div>
         </div>
-        <h3>Attack Surface Mapper</h3>
-        <div class="ptag">Enterprise Security Assessment Platform</div>
-        <div class="card-screenshot">
-          <img src="screenshots/attack-surface-mapper.png" alt="Attack Surface Mapper Dashboard">
-        </div>
-        <p>Automates vulnerability scanning, MITRE ATT&amp;CK mapping across 703 techniques, and compliance checks (PCI-DSS, NIST CSF, CIS v8) — with CLI, terminal dashboard and web UI.</p>
-        <div class="stack">stack&nbsp;&rsaquo;&nbsp;<span>Python · Flask-SocketIO · Shodan · MITRE ATT&CK · ReportLab · 23 tests</span></div>
       </div>
+    </article>
 
-      <div class="card">
-        <div class="card-top">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-          </div>
-          <div class="card-links">
-            <a href="https://github.com/AhmedDAH1/email-threat-analyzer" target="_blank" rel="noopener" aria-label="GitHub repo">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.44 9.63 8.21 11.19.6.11.82-.25.82-.56v-2.2c-3.34.71-4.04-1.58-4.04-1.58-.55-1.37-1.34-1.74-1.34-1.74-1.09-.73.08-.72.08-.72 1.21.08 1.84 1.22 1.84 1.22 1.07 1.8 2.81 1.28 3.5.98.11-.76.42-1.28.76-1.58-2.67-.3-5.47-1.31-5.47-5.81 0-1.28.47-2.33 1.24-3.15-.13-.3-.54-1.51.12-3.15 0 0 1.01-.32 3.3 1.2.96-.26 1.98-.39 3-.4 1.02 0 2.04.14 3 .4 2.29-1.52 3.3-1.2 3.3-1.2.66 1.64.25 2.85.12 3.15.77.82 1.24 1.87 1.24 3.15 0 4.51-2.81 5.5-5.49 5.79.43.36.81 1.08.81 2.18v3.23c0 .31.21.68.83.56C20.57 21.91 24 17.5 24 12.29 24 5.78 18.63.5 12 .5Z"/></svg>
-            </a>
+    <article class="entry">
+      <div class="entry-no">02·2</div>
+      <div>
+        <div class="entry-h">
+          <div class="entry-name">Log Threat Detector</div>
+          <div class="entry-kind">SIEM-Style Log Correlation</div>
+        </div>
+        <p class="entry-desc">
+          Ingests SSH, Apache and syslog files to detect brute-force attempts, port scans and
+          anomalies; a correlation engine surfaces attack patterns across sources. Real-time
+          Flask + WebSocket dashboard with AbuseIPDB enrichment and email alerting.
+        </p>
+        <div class="entry-foot">
+          <div class="entry-stack">Python · Flask · SQLite · AbuseIPDB · Chart.js · Docker</div>
+          <div class="entry-links">
+            <a class="live" href="https://log-threat-detector.onrender.com" target="_blank" rel="noopener">Live demo ↗</a>
+            <a href="https://github.com/AhmedDAH1/log_threat_detector" target="_blank" rel="noopener">Source</a>
           </div>
         </div>
-        <h3>Email Threat Analyzer</h3>
-        <div class="ptag">Phishing Detection Engine</div>
-        <div class="card-screenshot">
-          <img src="screenshots/email-threat-analyzer.png" alt="Email Threat Analyzer Output">
-        </div>
-        <p>Parses .eml files and analyzes headers, URLs, attachments and body content. Multi-layer weighted threat scoring (0–100) with VirusTotal integration — tested against the Nazario phishing corpus.</p>
-        <div class="stack">stack&nbsp;&rsaquo;&nbsp;<span>Python · email module · VirusTotal API · pytest · 34 tests</span></div>
       </div>
+    </article>
 
-      <div class="card">
-        <div class="card-top">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg>
-          </div>
-          <div class="card-links">
-            <a href="https://github.com/AhmedDAH1/log_threat_detector" target="_blank" rel="noopener" aria-label="GitHub repo">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.44 9.63 8.21 11.19.6.11.82-.25.82-.56v-2.2c-3.34.71-4.04-1.58-4.04-1.58-.55-1.37-1.34-1.74-1.34-1.74-1.09-.73.08-.72.08-.72 1.21.08 1.84 1.22 1.84 1.22 1.07 1.8 2.81 1.28 3.5.98.11-.76.42-1.28.76-1.58-2.67-.3-5.47-1.31-5.47-5.81 0-1.28.47-2.33 1.24-3.15-.13-.3-.54-1.51.12-3.15 0 0 1.01-.32 3.3 1.2.96-.26 1.98-.39 3-.4 1.02 0 2.04.14 3 .4 2.29-1.52 3.3-1.2 3.3-1.2.66 1.64.25 2.85.12 3.15.77.82 1.24 1.87 1.24 3.15 0 4.51-2.81 5.5-5.49 5.79.43.36.81 1.08.81 2.18v3.23c0 .31.21.68.83.56C20.57 21.91 24 17.5 24 12.29 24 5.78 18.63.5 12 .5Z"/></svg>
-            </a>
+    <article class="entry">
+      <div class="entry-no">02·3</div>
+      <div>
+        <div class="entry-h">
+          <div class="entry-name">Network Scanner</div>
+          <div class="entry-kind">Network Reconnaissance</div>
+        </div>
+        <p class="entry-desc">
+          Scapy-based scanner — ARP/ICMP host discovery, multi-threaded SYN/UDP port scanning,
+          TTL-based OS fingerprinting, MAC vendor lookup and CVE lookup, with a live-streaming
+          web dashboard. Containerized with least-privilege capabilities (<code>NET_RAW</code>, never <code>--privileged</code>).
+        </p>
+        <div class="entry-foot">
+          <div class="entry-stack">Python · Scapy · Docker · Flask</div>
+          <div class="entry-links">
+            <a class="live" href="https://network-scanner-8ihy.onrender.com" target="_blank" rel="noopener">Live demo ↗</a>
+            <a href="https://github.com/AhmedDAH1/network-scanner" target="_blank" rel="noopener">Source</a>
           </div>
         </div>
-        <h3>Log Threat Detector</h3>
-        <div class="ptag">SIEM-Style Log Analysis &amp; Correlation</div>
-        <div class="card-screenshot">
-          <img src="screenshots/log-threat-detector.png" alt="Log Threat Detector Dashboard">
-        </div>
-        <p>Ingests SSH, Apache and syslog files to detect brute-force, port scans and anomalies. Correlation engine identifies attack patterns across sources, with a real-time Flask dashboard and email alerting.</p>
-        <div class="stack">stack&nbsp;&rsaquo;&nbsp;<span>Python · Flask · SQLite · AbuseIPDB API · Chart.js · 14 tests</span></div>
       </div>
+    </article>
 
-      <div class="card">
-        <div class="card-top">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
-          </div>
-          <div class="card-links">
-            <a href="https://github.com/AhmedDAH1/network-scanner" target="_blank" rel="noopener" aria-label="GitHub repo">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.44 9.63 8.21 11.19.6.11.82-.25.82-.56v-2.2c-3.34.71-4.04-1.58-4.04-1.58-.55-1.37-1.34-1.74-1.34-1.74-1.09-.73.08-.72.08-.72 1.21.08 1.84 1.22 1.84 1.22 1.07 1.8 2.81 1.28 3.5.98.11-.76.42-1.28.76-1.58-2.67-.3-5.47-1.31-5.47-5.81 0-1.28.47-2.33 1.24-3.15-.13-.3-.54-1.51.12-3.15 0 0 1.01-.32 3.3 1.2.96-.26 1.98-.39 3-.4 1.02 0 2.04.14 3 .4 2.29-1.52 3.3-1.2 3.3-1.2.66 1.64.25 2.85.12 3.15.77.82 1.24 1.87 1.24 3.15 0 4.51-2.81 5.5-5.49 5.79.43.36.81 1.08.81 2.18v3.23c0 .31.21.68.83.56C20.57 21.91 24 17.5 24 12.29 24 5.78 18.63.5 12 .5Z"/></svg>
-            </a>
+    <article class="entry">
+      <div class="entry-no">02·4</div>
+      <div>
+        <div class="entry-h">
+          <div class="entry-name">Attack Surface Mapper</div>
+          <div class="entry-kind">Security Assessment Platform</div>
+        </div>
+        <p class="entry-desc">
+          Automated vulnerability scanning with MITRE ATT&amp;CK technique mapping and compliance
+          checks against PCI-DSS v4.0, NIST CSF and CIS Controls v8. Three interfaces (CLI,
+          terminal dashboard, web UI), Shodan exposure checks and multi-format reporting.
+        </p>
+        <div class="entry-foot">
+          <div class="entry-stack">Python · Flask-SocketIO · MITRE ATT&CK · Shodan · 23 tests</div>
+          <div class="entry-links">
+            <a href="https://github.com/AhmedDAH1/attack-surface-mapper" target="_blank" rel="noopener">Source</a>
           </div>
         </div>
-        <h3>Network Scanner</h3>
-        <div class="ptag">Multi-Threaded Network Reconnaissance</div>
-        <div class="card-screenshot">
-          <img src="screenshots/network-scanner.png" alt="Network Scanner Results">
-        </div>
-        <p>Host discovery, port enumeration and OS fingerprinting built on Scapy with raw sockets. Includes CVE vulnerability lookup integration and a web dashboard for visualizing scan results.</p>
-        <div class="stack">stack&nbsp;&rsaquo;&nbsp;<span>Python · Scapy · Raw Sockets · Multi-threading · CVE lookup</span></div>
       </div>
+    </article>
+  </section>
 
-    </div>
-  </div>
-</section>
-
-<section id="skills">
-  <div class="wrap reveal">
+  <section id="skills">
     <div class="sec-head">
-      <span class="sec-num">04</span>
-      <span class="sec-title">Technical Skills</span>
-      <span class="sec-meta">// blue team + builder</span>
-    </div>
-    <div class="skill-cols">
-      <div class="skill-block">
-        <h4>security &amp; networking</h4>
-        <div class="tag-cloud">
-          <span class="tg">Threat Detection</span>
-          <span class="tg">Incident Response</span>
-          <span class="tg">SOAR Automation</span>
-          <span class="tg">Log Analysis</span>
-          <span class="tg">Phishing Analysis</span>
-          <span class="tg">Network Reconnaissance</span>
-          <span class="tg">Packet Analysis</span>
-          <span class="tg">Wireshark</span>
-          <span class="tg">Nmap</span>
-          <span class="tg">Vulnerability Assessment</span>
-          <span class="tg">MITRE ATT&CK</span>
-          <span class="tg">SIEM Concepts</span>
-          <span class="tg">IOC Extraction</span>
-          <span class="tg">Threat Intelligence</span>
-          <span class="tg">CTF</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <h4>development</h4>
-        <div class="tag-cloud">
-          <span class="tg">Python</span>
-          <span class="tg">FastAPI</span>
-          <span class="tg">Flask</span>
-          <span class="tg">asyncio</span>
-          <span class="tg">REST APIs</span>
-          <span class="tg">PostgreSQL</span>
-          <span class="tg">SQLite</span>
-          <span class="tg">Scapy</span>
-          <span class="tg">Docker</span>
-          <span class="tg">Git / GitHub</span>
-          <span class="tg">GitHub Actions</span>
-          <span class="tg">Linux / Bash</span>
-          <span class="tg">pytest</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <h4>2026 goals</h4>
-        <div class="tag-cloud">
-          <span class="tg">CompTIA Security+</span>
-          <span class="tg">Penetration Testing</span>
-          <span class="tg">Burp Suite</span>
-          <span class="tg">Threat Hunting</span>
-          <span class="tg">Malware Analysis</span>
-          <span class="tg">MISP / OpenCTI</span>
-          <span class="tg">STIX / TAXII</span>
-          <span class="tg">TryHackMe SOC L1</span>
-          <span class="tg">Splunk</span>
-          <span class="tg">CompTIA CySA+</span>
-        </div>
+      <div class="sec-no">03</div>
+      <div>
+        <div class="sec-title">Capabilities</div>
+        <div class="sec-note">// blue team, and the engineering to back it</div>
       </div>
     </div>
-  </div>
-</section>
+    <div class="two-up">
+      <div class="field">
+        <h4>Security &amp; Blue Team</h4>
+        <p>
+          <span class="lbl">Detection &amp; Response</span>
+          Threat detection · Incident response · SIEM concepts · Log analysis · IOC extraction · MITRE ATT&amp;CK · Threat intelligence (VirusTotal, AbuseIPDB, Shodan)
+        </p>
+        <p>
+          <span class="lbl">Offensive Awareness</span>
+          Phishing analysis · Network reconnaissance · Packet analysis (Wireshark) · Nmap · Vulnerability assessment · CTF (TryHackMe SOC L1, PicoCTF)
+        </p>
+      </div>
+      <div class="field">
+        <h4>Engineering</h4>
+        <p>
+          <span class="lbl">Build</span>
+          Python · FastAPI · Flask · asyncio · Scapy · REST APIs · PostgreSQL · SQLite
+        </p>
+        <p>
+          <span class="lbl">Ship</span>
+          Docker · GitHub Actions CI/CD · Linux / Bash · pytest · Git · pre-commit
+        </p>
+      </div>
+    </div>
+  </section>
 
-<section id="education">
-  <div class="wrap reveal">
+  <section id="credentials">
     <div class="sec-head">
-      <span class="sec-num">05</span>
-      <span class="sec-title">Education &amp; Certifications</span>
-      <span class="sec-meta">// in progress</span>
-    </div>
-    <div class="edu-wrap">
-      <div class="edu-card">
-        <h4>B.Sc. Software Engineering</h4>
-        <div class="when">Zhengzhou University, China · 2023 – 2027</div>
-        <p>Third-year Software Engineering student specializing in cybersecurity. Building a hands-on portfolio of production security tooling alongside coursework, with the goal of moving into a SOC analyst role.</p>
-      </div>
-      <div class="edu-card">
-        <div class="cert-row"><span class="badge prog">IN PROGRESS</span><span class="cn">CompTIA Security+</span></div>
-        <div class="cert-row"><span class="badge done">COMPLETED</span><span class="cn">Cisco Endpoint Security</span></div>
-        <div class="cert-row"><span class="badge done">COMPLETED</span><span class="cn">Cisco Intro to Cybersecurity</span></div>
-        <div class="cert-row"><span class="badge done">COMPLETED</span><span class="cn">Python Security Fundamentals</span></div>
-        <div class="cert-row"><span class="badge next">NEXT GOAL</span><span class="cn">CompTIA CySA+</span></div>
-        <div class="cert-row" style="border-top:1px solid var(--border);margin-top:6px;padding-top:12px">
-          <span class="cn" style="color:var(--text-dim);font-size:12px">Full certificate list published on LinkedIn →</span>
-        </div>
+      <div class="sec-no">04</div>
+      <div>
+        <div class="sec-title">Education &amp; Certifications</div>
+        <div class="sec-note">// Zhengzhou University · 2021–2027</div>
       </div>
     </div>
-  </div>
-</section>
+    <div class="two-up">
+      <div class="field">
+        <h4>Education</h4>
+        <p>
+          <span class="lbl">B.Sc. Software Engineering</span>
+          Zhengzhou University, China · 2021–2027. Specializing in cybersecurity, building a
+          hands-on portfolio of production security tooling alongside coursework toward a SOC
+          analyst role.
+        </p>
+        <p>
+          <span class="lbl">Languages</span>
+          Arabic (native) · English (fluent) · Mandarin (conversational) · French (intermediate)
+        </p>
+      </div>
+      <div class="field">
+        <h4>Certifications</h4>
+        <ul class="cred">
+          <li><span class="st prog">IN PROGRESS</span> CompTIA Security+ <span style="color:var(--ink-faint);font-family:var(--mono);font-size:11px">· target Q3 2026</span></li>
+          <li><span class="st done">COMPLETED</span> Cisco Endpoint Security</li>
+          <li><span class="st done">COMPLETED</span> Cisco Introduction to Cybersecurity</li>
+          <li><span class="st done">COMPLETED</span> Python Security Fundamentals</li>
+          <li><span class="st next">NEXT</span> CompTIA CySA+</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<section id="contact">
-  <div class="wrap reveal">
-    <div class="contact-box">
-      <h2>Let's connect</h2>
-      <p>Seeking SOC Analyst / Security Engineer roles where I can build security automation, integrate threat intelligence into detection workflows, and develop response playbooks.</p>
-      <div class="contact-links">
-        <a class="btn primary" href="mailto:adahdouh123@gmail.com">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-          adahdouh123@gmail.com
-        </a>
-        <a class="btn" href="https://www.linkedin.com/in/ahmed-dahdouh" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
-          LinkedIn
-        </a>
-        <a class="btn" href="https://github.com/AhmedDAH1" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.44 9.63 8.21 11.19.6.11.82-.25.82-.56v-2.2c-3.34.71-4.04-1.58-4.04-1.58-.55-1.37-1.34-1.74-1.34-1.74-1.09-.73.08-.72.08-.72 1.21.08 1.84 1.22 1.84 1.22 1.07 1.8 2.81 1.28 3.5.98.11-.76.42-1.28.76-1.58-2.67-.3-5.47-1.31-5.47-5.81 0-1.28.47-2.33 1.24-3.15-.13-.3-.54-1.51.12-3.15 0 0 1.01-.32 3.3 1.2.96-.26 1.98-.39 3-.4 1.02 0 2.04.14 3 .4 2.29-1.52 3.3-1.2 3.3-1.2.66 1.64.25 2.85.12 3.15.77.82 1.24 1.87 1.24 3.15 0 4.51-2.81 5.5-5.49 5.79.43.36.81 1.08.81 2.18v3.23c0 .31.21.68.83.56C20.57 21.91 24 17.5 24 12.29 24 5.78 18.63.5 12 .5Z"/></svg>
-          GitHub
-        </a>
-        <a class="btn" href="https://tryhackme.com/p/AhmedDAH1" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6l-8-4Z"/></svg>
-          TryHackMe
-        </a>
-      </div>
+  <section class="colophon" id="contact" style="border-bottom:none">
+    <h2>Looking for a <em>SOC analyst</em> seat.</h2>
+    <p>
+      Remote or relocation. I want to work on threat detection, incident response, and
+      detection automation — and keep building tools that make the blue team faster.
+    </p>
+    <div class="actions">
+      <a class="live" href="mailto:adahdouh123@gmail.com">adahdouh123@gmail.com</a>
+      <a href="https://www.linkedin.com/in/ahmed-dahdouh" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/AhmedDAH1" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://tryhackme.com/p/AhmedDAH1" target="_blank" rel="noopener">TryHackMe</a>
     </div>
-  </div>
+  </section>
+
   <footer>
-    <div class="wrap">
-      <div class="foot-inner">
-        <span>© 2026 Ahmed Dahdouh — built from scratch, no frameworks.</span>
-        <span><span class="ok">●</span> status: open to work</span>
-      </div>
-    </div>
+    <span>© 2026 Ahmed Dahdouh</span>
+    <span>Set in Newsreader &amp; IBM Plex · hand-built, no frameworks</span>
   </footer>
-</section>
 
-<script>
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-</script>
-
+</div>
 </body>
 </html>
