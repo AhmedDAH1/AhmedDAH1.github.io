@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline Dashboard · Ahmed Dahdouh</title>
+<meta name="description" content="One dashboard for my detection and response pipeline: seven connected projects, their tests, detection coverage and measured results, with live CI status from GitHub.">
+<meta property="og:title" content="Detection and response pipeline: dashboard">
+<meta property="og:description" content="Seven connected security projects, their tests, ATT&amp;CK coverage and measured results, with live CI status.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahmeddah1.github.io/dashboard/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F3F5F7;
+    --surface: #FFFFFF;
+    --ink: #13202E;
+    --slate: #556577;
+    --muted: #6B7A8B;
+    --line: #D3DAE2;
+    --signal: #1F4FD1;
+    --good: #12751f;
+    --good-bg: #e5f4e4;
+    --bad: #c23434;
+    --bad-bg: #fbebeb;
+    --warn: #8a5a00;
+    --warn-bg: #f9eeda;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 1rem; line-height: 1.55; }
+  a { color: var(--signal); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; border-radius: 3px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0; flex-wrap: wrap; }
+  .top .mark { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: var(--ink); text-decoration: none; }
+  .top nav { display: flex; gap: 20px; flex-wrap: wrap; }
+  .top nav a { color: var(--slate); text-decoration: none; font-size: 0.95rem; }
+  .top nav a:hover { color: var(--ink); }
+
+  .head { padding: 26px 0 28px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 32px; flex-wrap: wrap; }
+  .eyebrow { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--slate); text-transform: uppercase; margin: 0 0 10px; }
+  h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.02; letter-spacing: -0.03em; margin: 0 0 12px; }
+  .head p { margin: 0; color: var(--slate); max-width: 40em; }
+  .livestate { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--slate); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; white-space: nowrap; }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+  .pulse.on { background: var(--good); box-shadow: 0 0 0 0 rgba(18,117,31,.5); animation: pulse 2s infinite; }
+  @keyframes pulse { 70% { box-shadow: 0 0 0 7px rgba(18,117,31,0); } 100% { box-shadow: 0 0 0 0 rgba(18,117,31,0); } }
+  @media (prefers-reduced-motion: reduce) { .pulse.on { animation: none; } }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  .grid { display: grid; gap: 16px; }
+  h2 { font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em; margin: 0; }
+  .panel { padding: 20px; }
+  .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 16px; flex-wrap: wrap; margin-bottom: 14px; }
+  .panel-head p { margin: 0; color: var(--slate); font-size: 0.9rem; }
+  section { margin-bottom: 16px; }
+
+  /* KPI tiles */
+  .kpis { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .kpi { padding: 16px 18px; }
+  .kpi .label { font-size: 0.82rem; color: var(--slate); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .kpi .value { font-family: var(--display); font-weight: 800; font-size: 2.1rem; line-height: 1.1; letter-spacing: -0.02em; margin: 6px 0 4px; font-variant-numeric: tabular-nums; }
+  .kpi .note { font-size: 0.86rem; color: var(--slate); line-height: 1.4; }
+
+  /* Pipeline */
+  .flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px; position: relative; }
+  .stage { position: relative; border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--surface); display: flex; flex-direction: column; gap: 10px; }
+  .stage:not(:last-child)::after { content: ""; position: absolute; right: -22px; top: 26px; width: 16px; height: 2px; background: var(--slate); }
+  .stage:not(:last-child)::before { content: ""; position: absolute; right: -23px; top: 22px; border: 5px solid transparent; border-left: 7px solid var(--slate); }
+  .stage .step { font-family: var(--mono); font-size: 0.76rem; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em; }
+  .tool { display: flex; flex-direction: column; gap: 2px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .tool:first-of-type { border-top: 0; padding-top: 0; }
+  .tool a.name { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: var(--ink); text-decoration: none; }
+  .tool a.name:hover { color: var(--signal); }
+  .tool .metric { font-size: 0.86rem; color: var(--slate); line-height: 1.35; }
+  .tool .metric b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .lab { margin-top: 18px; border: 1px dashed var(--slate); border-radius: 10px; padding: 14px 16px; display: grid; grid-template-columns: minmax(12rem, 0.8fr) 2fr; gap: 12px 24px; align-items: center; }
+  .lab .what b { font-family: var(--display); font-size: 1.05rem; }
+  .lab .what p { margin: 2px 0 0; font-size: 0.88rem; color: var(--slate); }
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 18px; font-size: 0.88rem; }
+  .checks li { display: flex; gap: 8px; align-items: flex-start; }
+  .checks svg { flex: none; margin-top: 3px; color: var(--good); }
+
+  /* CI status */
+  .ci { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; white-space: nowrap; text-decoration: none; }
+  .ci.ok { background: var(--good-bg); color: var(--good); }
+  .ci.fail { background: var(--bad-bg); color: var(--bad); }
+  .ci.run { background: var(--warn-bg); color: var(--warn); }
+  .ci.unknown { background: var(--paper); color: var(--slate); font-weight: 400; }
+  .ci img { height: 18px; display: block; }
+
+  /* Projects table */
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 11px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--slate); font-weight: 700; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td .pname { font-weight: 700; color: var(--ink); text-decoration: none; }
+  td .pname:hover { color: var(--signal); text-decoration: underline; }
+  td .sub { display: block; color: var(--slate); font-size: 0.84rem; line-height: 1.35; margin-top: 2px; }
+  .result { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .links a { margin-right: 10px; white-space: nowrap; }
+  .mono { font-family: var(--mono); font-size: 0.84rem; }
+  .stagetag { font-family: var(--mono); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--slate); }
+
+  .two { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+  .tid { font-family: var(--mono); font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
+  .feed { list-style: none; margin: 0; padding: 0; }
+  .feed li { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+  .feed li:last-child { border-bottom: 0; }
+  .feed .when { color: var(--slate); font-size: 0.82rem; grid-column: 2; }
+  .feed .msg { grid-column: 2; overflow-wrap: anywhere; }
+  .feed .repo { font-weight: 700; }
+  .feed .dot { grid-row: span 2; width: 10px; height: 10px; border-radius: 50%; margin-top: 6px; background: var(--muted); }
+  .feed .dot.ok { background: var(--good); }
+  .feed .dot.fail { background: var(--bad); }
+  .feed .dot.run { background: #d9a21b; }
+  .empty { color: var(--slate); font-size: 0.9rem; margin: 0; }
+  .foot { color: var(--slate); font-size: 0.86rem; padding: 22px 0 44px; }
+
+  .results { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .res { padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .res .big { font-family: var(--display); font-weight: 800; font-size: 1.7rem; line-height: 1.1; letter-spacing: -0.02em; }
+  .res p { margin: 0; font-size: 0.88rem; color: var(--slate); }
+  .res a { font-size: 0.88rem; margin-top: auto; }
+
+  @media (max-width: 1080px) {
+    .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .flow { grid-template-columns: 1fr; gap: 22px; }
+    .stage:not(:last-child)::after { right: auto; left: 26px; top: auto; bottom: -16px; width: 2px; height: 10px; }
+    .stage:not(:last-child)::before { right: auto; left: 22px; top: auto; bottom: -21px; border: 5px solid transparent; border-top: 7px solid var(--slate); }
+    .stage { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 6px 24px; }
+    .stage .step { width: 100%; }
+    .tool { border-top: 0; padding-top: 0; flex: 1 1 14rem; }
+    .two, .results { grid-template-columns: 1fr 1fr; }
+    .two { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .wrap { padding: 0 16px; }
+    .kpis { grid-template-columns: 1fr 1fr; }
+    .lab { grid-template-columns: 1fr; }
+    .checks { grid-template-columns: 1fr; }
+    .results { grid-template-columns: 1fr; }
+    /* table → stacked cards */
+    table.stack thead { display: none; }
+    table.stack, table.stack tbody, table.stack tr, table.stack td { display: block; width: 100%; }
+    table.stack tr { padding: 12px 0; border-bottom: 1px solid var(--line); }
+    table.stack tbody tr:last-child { border-bottom: 0; }
+    table.stack td { border: 0; padding: 3px 0; }
+    table.stack td[data-label]::before { content: attr(data-label) ": "; color: var(--slate); font-size: 0.82rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="https://ahmeddah1.github.io/">Ahmed Dahdouh</a>
+    <nav aria-label="Pages">
+      <a href="https://ahmeddah1.github.io/">Portfolio</a>
+      <a href="https://ahmeddah1.github.io/ai-triage/">AI triage explorer</a>
+      <a href="https://github.com/AhmedDAH1">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="head">
+      <div>
+        <p class="eyebrow">Detection and response pipeline</p>
+        <h1>Pipeline dashboard</h1>
+        <p>Seven projects that work as one pipeline: an attack, the rules that detect it, the tools that analyse it, the platform that responds and the AI that assists. Build status and activity come live from GitHub.</p>
+      </div>
+      <span class="livestate" id="livestate"><span class="pulse" id="pulse"></span><span id="livetext">Checking GitHub…</span></span>
+    </div>
+
+    <section class="grid kpis" aria-label="Summary">
+      <div class="card kpi"><div class="label">Connected projects</div><div class="value">7</div><div class="note">attack, detect, analyse, respond, assist</div></div>
+      <div class="card kpi"><div class="label">Automated tests</div><div class="value" id="kpi-tests">423</div><div class="note">across five repos, plus Sigma test cases and lab checks</div></div>
+      <div class="card kpi"><div class="label">CI passing</div><div class="value" id="kpi-ci">–</div><div class="note" id="kpi-ci-note">latest run on main, live</div></div>
+      <div class="card kpi"><div class="label">Detection rules</div><div class="value">4</div><div class="note">2 Suricata, 2 Sigma, each tested on real attack traffic and a benign baseline</div></div>
+      <div class="card kpi"><div class="label">Attacks on the AI</div><div class="value">136</div><div class="note">prompt injections, run against two models</div></div>
+    </section>
+
+    <section class="card panel" aria-labelledby="flow-h">
+      <div class="panel-head"><h2 id="flow-h">How the pipeline fits together</h2><p>Each tool feeds the next. Status per repo is live.</p></div>
+      <div class="flow" id="flow"></div>
+      <div class="lab">
+        <div class="what">
+          <b><a href="https://github.com/AhmedDAH1/soc-lab">SOC Lab</a></b> <span id="ci-soc-lab"></span>
+          <p>Runs the whole pipeline with one command (Docker Compose), and CI runs it on every push. Every run checks:</p>
+        </div>
+        <ul class="checks" id="checks"></ul>
+      </div>
+    </section>
+
+    <section class="card panel" aria-labelledby="proj-h">
+      <div class="panel-head"><h2 id="proj-h">Projects</h2><p>Release, last change and CI come from GitHub when you load the page.</p></div>
+      <table class="stack" id="projects">
+        <thead><tr><th>Project</th><th>Measured result</th><th>Tests</th><th>Release</th><th>Last change</th><th>CI</th><th>Links</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <div class="grid two">
+      <section class="card panel" aria-labelledby="cov-h">
+        <div class="panel-head"><h2 id="cov-h">Detection coverage</h2><p>What each technique is caught by, and how that was tested.</p></div>
+        <table class="stack" id="coverage">
+          <thead><tr><th>Technique</th><th>Detected by</th><th>Tested on</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+      <section class="card panel" aria-labelledby="act-h">
+        <div class="panel-head"><h2 id="act-h">Latest builds</h2><p>Most recent CI run per repo, newest first.</p></div>
+        <ul class="feed" id="feed"><li><p class="empty">Loading from GitHub…</p></li></ul>
+      </section>
+    </div>
+
+    <section aria-labelledby="res-h" style="margin-top:16px">
+      <h2 id="res-h" style="margin:8px 0 12px">Measured, not claimed</h2>
+      <div class="grid results">
+        <div class="card res"><div class="big">68% → 2%</div><p>Prompt-injection attacks that got a small AI model to dismiss a real attack, before and after the strict guard I designed. A large model: 0 of 136.</p><a href="https://ahmeddah1.github.io/ai-triage/">Try the attacks</a></div>
+        <div class="card res"><div class="big">73%</div><p>Of 414 real phishing emails (Nazario corpus) flagged by Email Threat Analyzer, reported with what it misses and why.</p><a href="https://github.com/AhmedDAH1/email-threat-analyzer#validation-against-real-world-phishing">Validation</a></div>
+        <div class="card res"><div class="big">2 vulns</div><p>Found and fixed in my own SOAR platform: unsigned webhooks (now replay-proof HMAC) and stored XSS through attacker-written alert text.</p><a href="https://github.com/AhmedDAH1/soar-lite">SOAR-Lite</a></div>
+        <div class="card res"><div class="big">8 cases</div><p>Each Sigma rule must fire on real captures and stay quiet on benign traffic built to trip it, with Splunk, Elastic and Sentinel queries checked in CI.</p><a href="https://github.com/AhmedDAH1/sigma-detection-rules">Sigma rules</a></div>
+      </div>
+    </section>
+  </main>
+
+  <p class="foot">Static figures are from each repository's README and test suite as of November 2026. Live data: the GitHub API, read in your browser; if it is unavailable, the repos' own CI badges are shown instead.</p>
+</div>
+
+<script>
+"use strict";
+const OWNER = "AhmedDAH1";
+const PROJECTS = [
+  { repo: "network-scanner", workflow: "tests.yml", name: "NetScan", stage: "Attack",
+    role: "Network scanner written from scratch in Scapy, hardened against hostile targets",
+    result: "Detected by its own rules", tests: 194, release: "v2.3.0", demo: "https://network-scanner-8ihy.onrender.com" },
+  { repo: "sigma-detection-rules", workflow: "ci.yml", name: "Sigma Detection Rules", stage: "Detect",
+    role: "Detection-as-code with pySigma; queries for Splunk, Elastic and Sentinel",
+    result: "8 test cases incl. benign baselines", tests: null, testsNote: "8 cases", release: null },
+  { repo: "log_threat_detector", workflow: "tests.yml", name: "Log Threat Detector", stage: "Analyse",
+    role: "SIEM-style detection across SSH, web and firewall logs",
+    result: "Brute force, scans and scanners", tests: 30, release: "v1.2.0", demo: "https://log-threat-detector.onrender.com" },
+  { repo: "email-threat-analyzer", workflow: "ci.yml", name: "Email Threat Analyzer", stage: "Analyse",
+    role: "Phishing detection engine scoring emails 0–100",
+    result: "73% of 414 real phish flagged", tests: 48, release: "v1.2.0", demo: "https://email-threat-analyzer-zt7f.onrender.com" },
+  { repo: "soar-lite", workflow: "ci.yml", name: "SOAR-Lite", stage: "Respond",
+    role: "Incidents, IOC extraction, enrichment and playbooks",
+    result: "2 vulnerabilities found and fixed", tests: 88, release: "v2.0.0", demo: "https://soar-lite.onrender.com" },
+  { repo: "ai-alert-triage", workflow: "ci.yml", name: "AI Alert Triage", stage: "Assist",
+    role: "AI-suggested verdicts, red-teamed against prompt injection",
+    result: "Attacks succeeding: 68% → 2%", tests: 63, release: "v0.2.1", demo: "https://ahmeddah1.github.io/ai-triage/", demoLabel: "Explorer" },
+  { repo: "soc-lab", workflow: "ci.yml", name: "SOC Lab", stage: "Orchestrate",
+    role: "The whole pipeline in one command, run by CI on every push",
+    result: "5 of 5 end-to-end checks", tests: null, testsNote: "5 checks", release: null },
+];
+const STAGES = [
+  ["1 · Attack", ["network-scanner"], { "network-scanner": "SYN scans, banner grabs, CVE matching" }],
+  ["2 · Detect", ["sigma-detection-rules"], { "sigma-detection-rules": "<b>2</b> Sigma rules, plus <b>2</b> Suricata rules in NetScan" }],
+  ["3 · Analyse", ["log_threat_detector", "email-threat-analyzer"], { "log_threat_detector": "SSH, web and firewall logs", "email-threat-analyzer": "<b>73%</b> of 414 real phish flagged" }],
+  ["4 · Respond", ["soar-lite"], { "soar-lite": "Incidents with extracted IOCs, from signed webhooks" }],
+  ["5 · Assist", ["ai-alert-triage"], { "ai-alert-triage": "Attacks succeeding: <b>68% → 2%</b> with the strict guard" }],
+];
+const LAB_CHECKS = [
+  "NetScan caught by Suricata: packet fingerprint",
+  "NetScan caught by Suricata: HTTP probe",
+  "Log Threat Detector: SSH brute force",
+  "Email Threat Analyzer: phishing verdict",
+  "Scanner's address extracted as an IOC in SOAR-Lite",
+];
+const COVERAGE = [
+  ["T1046", "Network Service Discovery", "2 Suricata rules · 2 Sigma rules · Log Threat Detector", "Recorded NetScan scans, a benign baseline, and live in SOC Lab"],
+  ["T1110", "Brute Force", "Log Threat Detector, including guesses at usernames that don't exist", "Sample SSH logs; live in SOC Lab"],
+  ["T1595", "Active Scanning", "Log Threat Detector (Nikto, sqlmap, Nmap, masscan user agents)", "Sample web server logs"],
+  ["T1566", "Phishing", "Email Threat Analyzer", "414 real phishing emails and a labelled benign control"],
+  ["AML.T0051", "LLM Prompt Injection (MITRE ATLAS)", "AI Alert Triage guards", "136 attacks against two models"],
+];
+const byRepo = Object.fromEntries(PROJECTS.map(p => [p.repo, p]));
+const live = {};   // repo -> { run, release }
+
+const $ = (id) => document.getElementById(id);
+function el(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else if (k === "html") n.innerHTML = v; else n.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null) n.append(k.nodeType ? k : document.createTextNode(String(k)));
+  return n;
+}
+const repoUrl = (r) => `https://github.com/${OWNER}/${r}`;
+const CHECK_SVG = '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function ago(iso) {
+  if (!iso) return "–";
+  const s = (Date.now() - new Date(iso)) / 1000;
+  if (s < 3600) return `${Math.max(1, Math.round(s / 60))} min ago`;
+  if (s < 86400) return `${Math.round(s / 3600)} h ago`;
+  const d = Math.round(s / 86400);
+  return d === 1 ? "yesterday" : d < 60 ? `${d} days ago` : new Date(iso).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+}
+
+function ciBadge(repo) {
+  const p = byRepo[repo], run = live[repo] && live[repo].run;
+  if (run === undefined) return el("span", { class: "ci unknown", text: "…" });
+  if (run === null) {   // API unavailable: fall back to the repo's own badge image
+    return el("a", { class: "ci", href: `${repoUrl(repo)}/actions/workflows/${p.workflow}`, "aria-label": `${p.name} CI status` },
+      el("img", { src: `${repoUrl(repo)}/actions/workflows/${p.workflow}/badge.svg`, alt: `${p.name} CI status` }));
+  }
+  const [cls, label] = run.status !== "completed" ? ["run", "running"] : run.conclusion === "success" ? ["ok", "passing"] : ["fail", run.conclusion || "failed"];
+  const icon = cls === "ok" ? CHECK_SVG : cls === "fail"
+    ? '<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>'
+    : '<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="2.4" fill="none"/></svg>';
+  return el("a", { class: `ci ${cls}`, href: run.html_url, title: `Latest run on main: ${label}`, html: icon }, label);
+}
+
+function renderFlow() {
+  const flow = $("flow"); flow.replaceChildren();
+  for (const [step, repos, metrics] of STAGES) {
+    const st = el("div", { class: "stage" }, el("div", { class: "step", text: step }));
+    for (const r of repos) {
+      st.append(el("div", { class: "tool" },
+        el("div", {}, el("a", { class: "name", href: repoUrl(r), text: byRepo[r].name }), " ", ciBadge(r)),
+        el("div", { class: "metric", html: metrics[r] })));   // static strings from this file only
+    }
+    flow.append(st);
+  }
+  $("ci-soc-lab").replaceChildren(ciBadge("soc-lab"));
+}
+
+function renderChecks() {
+  const ul = $("checks");
+  for (const c of LAB_CHECKS) ul.append(el("li", { html: CHECK_SVG }, c));
+}
+
+function renderProjects() {
+  const tb = $("projects").querySelector("tbody"); tb.replaceChildren();
+  for (const p of PROJECTS) {
+    const L = live[p.repo] || {};
+    const release = L.release !== undefined ? L.release : p.release;
+    const changed = L.run ? L.run.updated_at : null;
+    tb.append(el("tr", {},
+      el("td", {}, el("span", { class: "stagetag", text: p.stage }), el("br"), el("a", { class: "pname", href: repoUrl(p.repo), text: p.name }), el("span", { class: "sub", text: p.role })),
+      el("td", { "data-label": "Result" }, el("span", { class: "result", text: p.result })),
+      el("td", { class: "num", "data-label": "Tests", text: p.tests != null ? String(p.tests) : p.testsNote }),
+      el("td", { class: "num mono", "data-label": "Release" }, release ? el("a", { href: `${repoUrl(p.repo)}/releases/tag/${encodeURIComponent(release)}`, text: release }) : "–"),
+      el("td", { class: "num", "data-label": "Last change", text: L.run === undefined ? "…" : ago(changed) }),
+      el("td", { "data-label": "CI" }, ciBadge(p.repo)),
+      el("td", { class: "links" }, el("a", { href: repoUrl(p.repo), text: "Source" }), p.demo ? el("a", { href: p.demo, text: p.demoLabel || "Live demo" }) : null)));
+  }
+}
+
+function renderCoverage() {
+  const tb = $("coverage").querySelector("tbody");
+  for (const [id, name, by, tested] of COVERAGE) {
+    tb.append(el("tr", {},
+      el("td", {}, el("span", { class: "tid", text: id }), el("span", { class: "sub", text: name })),
+      el("td", { "data-label": "Detected by", text: by }),
+      el("td", { "data-label": "Tested on", text: tested })));
+  }
+}
+
+function renderFeed(ok) {
+  const feed = $("feed"); feed.replaceChildren();
+  const runs = PROJECTS.map(p => ({ p, run: live[p.repo] && live[p.repo].run })).filter(x => x.run).sort((a, b) => new Date(b.run.updated_at) - new Date(a.run.updated_at));
+  if (!ok || !runs.length) {
+    feed.append(el("li", {}, el("p", { class: "empty", text: "GitHub's API isn't reachable right now (it allows 60 requests an hour per visitor). The CI badges above still show live status." })));
+    return;
+  }
+  for (const { p, run } of runs) {
+    const cls = run.status !== "completed" ? "run" : run.conclusion === "success" ? "ok" : "fail";
+    const msg = ((run.head_commit && run.head_commit.message) || run.display_title || "").split("\n")[0];
+    feed.append(el("li", {}, el("span", { class: `dot ${cls}`, "aria-hidden": "true" }),
+      el("span", {}, el("span", { class: "repo", text: p.name }), " · ", el("a", { href: run.html_url, text: cls === "ok" ? "passed" : cls === "run" ? "running" : "failed" })),
+      el("span", { class: "msg", text: msg }),
+      el("span", { class: "when", text: ago(run.updated_at) })));
+  }
+}
+
+function renderKpis(ok) {
+  const runs = PROJECTS.map(p => live[p.repo] && live[p.repo].run).filter(Boolean);
+  if (ok && runs.length) {
+    const passing = runs.filter(r => r.status === "completed" && r.conclusion === "success").length;
+    $("kpi-ci").textContent = `${passing} of ${runs.length}`;
+  } else {
+    $("kpi-ci").textContent = "–";
+    $("kpi-ci-note").textContent = "live API unavailable; see each repo's CI badge";
+  }
+}
+
+function renderAll(ok) { renderFlow(); renderProjects(); renderFeed(ok); renderKpis(ok); }
+
+async function getJSON(url) {
+  const r = await fetch(url, { headers: { Accept: "application/vnd.github+json" } });
+  if (r.status === 404) return null;
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+async function loadLive() {
+  let ok = true;
+  await Promise.all(PROJECTS.map(async (p) => {
+    try {
+      const runs = await getJSON(`https://api.github.com/repos/${OWNER}/${p.repo}/actions/workflows/${p.workflow}/runs?branch=main&per_page=1&exclude_pull_requests=true`);
+      const rel = await getJSON(`https://api.github.com/repos/${OWNER}/${p.repo}/releases/latest`);
+      live[p.repo] = { run: runs && runs.workflow_runs[0] ? runs.workflow_runs[0] : null, release: rel ? rel.tag_name : p.release };
+    } catch (e) {
+      ok = false;
+      live[p.repo] = { run: null };
+    }
+  }));
+  $("pulse").classList.toggle("on", ok);
+  $("livetext").textContent = ok ? `Live from GitHub · ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}` : "Live data unavailable · showing CI badges";
+  renderAll(ok);
+}
+
+renderChecks(); renderCoverage(); renderFlow(); renderProjects();
+$("kpi-ci").textContent = "…";
+loadLive();
+</script>
+</body>
+</html>
