@@ -263,8 +263,22 @@
 
     <section class="block" aria-labelledby="more-h">
       <h2 id="more-h">More projects</h2>
-      <p class="sub">Each one is tested, containerized and built with CI.</p>
+      <p class="sub">Each one is tested and built with CI.</p>
       <ul class="projects">
+        <li>
+          <div>
+            <h3>AI Alert Triage</h3>
+            <p class="kind">AI security</p>
+          </div>
+          <div>
+            <p>A language model suggests whether an alert is a real attack or noise, and I attacked it the way an attacker would: 136 prompt injections hidden in the fields attackers write, such as phishing subjects and SSH usernames. On a local 7B model, one hidden sentence got 68% of real attacks dismissed; a guard I designed, which only accepts a dismissal backed by the SOC's own records, cut that to 2%. DeepSeek resisted all 136. Every answer is recorded, and CI replays them to reproduce the published results.</p>
+            <p class="tech">Python, DeepSeek API, Ollama, prompt-injection red-teaming, 63 tests</p>
+            <div class="links">
+              <a href="https://github.com/AhmedDAH1/ai-alert-triage#results">Results</a>
+              <a href="https://github.com/AhmedDAH1/ai-alert-triage">Source</a>
+            </div>
+          </div>
+        </li>
         <li>
           <div>
             <h3>SOAR-Lite</h3>
