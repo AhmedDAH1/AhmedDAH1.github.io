@@ -230,13 +230,13 @@
     </section>
 
     <section class="pipeline" aria-labelledby="pipe-cap">
-      <p class="caption" id="pipe-cap">How a single alert moves through SOAR-Lite, my main project:</p>
+      <p class="caption" id="pipe-cap">How my projects work together, from attack to incident report:</p>
       <ol class="pipe">
-        <li style="--i:0"><span class="verb">Ingest</span><span class="what">Webhook alerts from SIEM, EDR and email gateways</span></li>
-        <li style="--i:1"><span class="verb">Extract</span><span class="what">IPs, domains, file hashes and email addresses</span></li>
-        <li style="--i:2"><span class="verb">Enrich</span><span class="what">Reputation lookups in VirusTotal and AbuseIPDB</span></li>
-        <li style="--i:3"><span class="verb">Decide</span><span class="what">YAML playbooks set severity and next steps</span></li>
-        <li style="--i:4"><span class="verb">Act</span><span class="what">Escalate and tag the incident automatically</span></li>
+        <li style="--i:0"><span class="verb">Scan</span><span class="what">NetScan probes a network the way an attacker would</span></li>
+        <li style="--i:1"><span class="verb">Detect</span><span class="what">Suricata and Sigma rules I wrote and tested catch it</span></li>
+        <li style="--i:2"><span class="verb">Send</span><span class="what">Alerts reach SOAR-Lite as HMAC-signed webhooks</span></li>
+        <li style="--i:3"><span class="verb">Investigate</span><span class="what">Each alert becomes an incident with its IOCs extracted and enriched</span></li>
+        <li style="--i:4"><span class="verb">Respond</span><span class="what">YAML playbooks escalate and tag the incident</span></li>
         <li style="--i:5"><span class="verb">Report</span><span class="what">One-click PDF or Word incident report</span></li>
       </ol>
     </section>
@@ -244,21 +244,19 @@
     <section class="block" id="work">
       <div class="flagship">
         <div>
-          <h2>SOAR-Lite</h2>
-          <p class="sub">Security orchestration, automation and response</p>
-          <p>SOC analysts lose hours repeating the same triage steps: checking whether an IP is known to be malicious, escalating by hand, pasting indicators into reports. SOAR-Lite runs that whole chain automatically. In simulated incidents it cut response time from over 30 minutes to under two.</p>
+          <h2>SOC Lab</h2>
+          <p class="sub">The whole pipeline, attack to incident, in one command</p>
+          <p>I built both sides: a network scanner, the detection rules that catch it, and the response platform its alerts land in. SOC Lab runs them together. NetScan scans a decoy server, Suricata recognises the scan with my rules, and SOAR-Lite opens incidents with the scanner's address as an indicator, alongside findings from my log and phishing analyzers.</p>
           <ul class="facts">
-            <li>53 automated tests with 84% coverage, run on every push through GitHub Actions</li>
-            <li>FastAPI, SQLAlchemy and Alembic on PostgreSQL or SQLite, packaged with Docker</li>
+            <li>Every project is built from its published release; one command, <code>./lab.sh</code>, runs everything and checks each incident arrived</li>
+            <li>CI runs the whole lab on every push, so a change that breaks the pipeline in any project fails the build</li>
           </ul>
           <div class="links">
-            <a href="https://soar-lite.onrender.com">Try the live demo</a>
-            <a href="https://youtu.be/Wade9SSN-Ts">Watch the 6-minute walkthrough</a>
-            <a href="https://github.com/AhmedDAH1/soar-lite">Read the source</a>
+            <a href="https://github.com/AhmedDAH1/soc-lab">Read the source and watch it run</a>
           </div>
         </div>
         <figure class="shot" style="margin:0">
-          <img src="https://ahmeddah1.github.io/screenshots/soar-lite.png" alt="SOAR-Lite dashboard showing a list of incidents with severity and enrichment results">
+          <img src="https://ahmeddah1.github.io/screenshots/soc-lab.png" alt="SOAR-Lite incident list after a SOC Lab run: two NetScan detections from Suricata, brute-force alerts from Log Threat Detector and a phishing verdict from Email Threat Analyzer">
         </figure>
       </div>
     </section>
@@ -269,13 +267,42 @@
       <ul class="projects">
         <li>
           <div>
+            <h3>SOAR-Lite</h3>
+            <p class="kind">Security orchestration, automation and response</p>
+            <span class="pill live">Live</span>
+          </div>
+          <div>
+            <p>Runs the SOC triage chain automatically: ingests alerts, extracts IPs, domains and hashes, checks their reputation in VirusTotal and AbuseIPDB, applies YAML playbooks and produces PDF or Word reports. Version 2.0 treats alert text as attacker-written: replay-proof signed webhooks, escaping plus a strict Content-Security-Policy, and a read-only public demo.</p>
+            <p class="tech">Python, FastAPI, SQLAlchemy, PostgreSQL, Docker, 88 tests</p>
+            <div class="links">
+              <a href="https://soar-lite.onrender.com">Live demo</a>
+              <a href="https://youtu.be/Wade9SSN-Ts">6-minute walkthrough</a>
+              <a href="https://github.com/AhmedDAH1/soar-lite">Source</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Sigma Detection Rules</h3>
+            <p class="kind">Detection engineering</p>
+          </div>
+          <div>
+            <p>Sigma rules held to a written testing standard: each must fire on real attack telemetry, stay quiet on a benign baseline built to trip it, and be tested on both sides of its threshold. Known blind spots are kept as test cases. CI validates every rule and regenerates its Splunk, Elasticsearch and Microsoft Sentinel queries.</p>
+            <p class="tech">Sigma, pySigma, Zeek, Splunk SPL, ES|QL, KQL, GitHub Actions</p>
+            <div class="links">
+              <a href="https://github.com/AhmedDAH1/sigma-detection-rules">Source</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div>
             <h3>Email Threat Analyzer</h3>
             <p class="kind">Phishing detection</p>
             <span class="pill live">Live</span>
           </div>
           <div>
             <p>Upload any .eml file and get a 0–100 threat score built from header, URL, attachment and content checks. Tested against 414 real phishing emails from the Nazario corpus, where it caught 73%, with a labeled set of legitimate emails to keep false positives in check.</p>
-            <p class="tech">Python, Flask, VirusTotal API, Docker, 34 tests</p>
+            <p class="tech">Python, Flask, VirusTotal API, Docker, 48 tests; forwards verdicts to SOAR-Lite</p>
             <div class="links">
               <a href="https://email-threat-analyzer-zt7f.onrender.com">Live demo</a>
               <a href="https://github.com/AhmedDAH1/email-threat-analyzer">Source</a>
@@ -289,8 +316,8 @@
             <span class="pill live">Live</span>
           </div>
           <div>
-            <p>Reads SSH, Apache and syslog files to spot brute-force attempts, port scans and unusual activity, then correlates events across sources to surface attack patterns. Includes a real-time dashboard, AbuseIPDB enrichment and email alerts.</p>
-            <p class="tech">Python, Flask, WebSockets, SQLite, AbuseIPDB API, Docker</p>
+            <p>Reads SSH, Apache and syslog files to spot brute-force attempts, port scans and unusual activity, then correlates events across sources to surface attack patterns. Includes a real-time dashboard, AbuseIPDB enrichment, email alerts and forwarding to SOAR-Lite.</p>
+            <p class="tech">Python, Flask, WebSockets, SQLite, AbuseIPDB API, Docker, 30 tests</p>
             <div class="links">
               <a href="https://log-threat-detector.onrender.com">Live demo</a>
               <a href="https://github.com/AhmedDAH1/log_threat_detector">Source</a>
@@ -299,13 +326,13 @@
         </li>
         <li>
           <div>
-            <h3>Network Scanner</h3>
-            <p class="kind">Network reconnaissance</p>
+            <h3>NetScan</h3>
+            <p class="kind">Network scanner and its detections</p>
             <span class="pill live">Live</span>
           </div>
           <div>
-            <p>Finds hosts with ARP and ICMP, scans ports with multi-threaded SYN and UDP probes, guesses operating systems from TTL values, and looks up device vendors and known CVEs. Runs in Docker with only the NET_RAW capability instead of full privileged mode.</p>
-            <p class="tech">Python, Scapy, Flask, Docker</p>
+            <p>Finds hosts with ARP and ICMP, scans ports with SYN and UDP probes, reads service banners and matches software versions to known CVEs. Hardened against hostile scan targets. Ships with Suricata and Sigma rules that detect NetScan itself, tested against a recorded scan and a benign baseline built to trip them.</p>
+            <p class="tech">Python, Scapy, Suricata, Sigma, Flask, Docker, 194 tests</p>
             <div class="links">
               <a href="https://network-scanner-8ihy.onrender.com">Live demo</a>
               <a href="https://github.com/AhmedDAH1/network-scanner">Source</a>
@@ -315,25 +342,14 @@
         <li>
           <div>
             <h3>Attack Surface Mapper</h3>
-            <p class="kind">Security assessment</p>
+            <p class="kind">Earlier project</p>
           </div>
           <div>
-            <p>Scans for vulnerabilities, maps findings to MITRE ATT&amp;CK techniques, and checks them against PCI-DSS v4.0, NIST CSF and CIS Controls v8. Works from the command line, a terminal dashboard or a web interface, with Shodan exposure checks and reports in PDF, HTML, CSV or JSON.</p>
+            <p>An early project wrapping Nmap: maps findings to MITRE ATT&amp;CK techniques and checks them against PCI-DSS v4.0, NIST CSF and CIS Controls v8. NetScan, built from raw packets, replaced it.</p>
             <p class="tech">Python, Flask-SocketIO, MITRE ATT&amp;CK, Shodan, 23 tests</p>
             <div class="links">
               <a href="https://github.com/AhmedDAH1/attack-surface-mapper">Source</a>
             </div>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3>Sigma Detection Rules</h3>
-            <p class="kind">Detection engineering</p>
-            <span class="pill wip">In progress</span>
-          </div>
-          <div>
-            <p>A small, carefully tested set of Sigma rules. Each rule is checked against recorded attack telemetry to confirm it fires, and against normal system activity to confirm it stays quiet. A CI pipeline lints the rules and converts them for Elastic, Splunk and Microsoft Sentinel.</p>
-            <p class="tech">Sigma, GitHub Actions, Zircolite, Chainsaw</p>
           </div>
         </li>
       </ul>
@@ -346,7 +362,9 @@
         <div>
           <h3>Detection and response</h3>
           <ul>
-            <li>Threat detection and log analysis</li>
+            <li>Sigma and Suricata rules, detection testing</li>
+            <li>Splunk SPL, ES|QL, Microsoft Sentinel KQL</li>
+            <li>Threat detection and log analysis, Zeek logs</li>
             <li>Incident response and triage</li>
             <li>IOC extraction</li>
             <li>MITRE ATT&amp;CK mapping</li>
@@ -360,10 +378,11 @@
           <ul>
             <li>Python: FastAPI, Flask, asyncio, Scapy</li>
             <li>PostgreSQL, SQLite</li>
-            <li>Docker</li>
+            <li>Docker and Docker Compose</li>
             <li>GitHub Actions CI/CD</li>
             <li>Linux and Bash</li>
             <li>pytest</li>
+            <li>Web security: XSS, CSRF, CSP, HMAC</li>
           </ul>
         </div>
         <div>
