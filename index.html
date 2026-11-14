@@ -289,7 +289,7 @@
           </div>
           <div>
             <p>Runs the SOC triage chain automatically: ingests alerts, extracts IPs, domains and hashes, checks their reputation in VirusTotal and AbuseIPDB, applies YAML playbooks and produces PDF or Word reports. Version 2.0 treats alert text as attacker-written: replay-proof signed webhooks, escaping plus a strict Content-Security-Policy, and a read-only public demo.</p>
-            <p class="tech">Python, FastAPI, SQLAlchemy, PostgreSQL, Docker, 88 tests</p>
+            <p class="tech">Python, FastAPI, SQLAlchemy, PostgreSQL, Docker, 116 tests</p>
             <div class="links">
               <a href="https://soar-lite.onrender.com">Live demo</a>
               <a href="https://youtu.be/Wade9SSN-Ts">6-minute walkthrough</a>
@@ -318,7 +318,7 @@
           </div>
           <div>
             <p>Upload any .eml file and get a 0–100 threat score built from header, URL, attachment and content checks. Tested against 414 real phishing emails from the Nazario corpus, where it caught 73%, with a labeled set of legitimate emails to keep false positives in check.</p>
-            <p class="tech">Python, Flask, VirusTotal API, Docker, 48 tests; forwards verdicts to SOAR-Lite</p>
+            <p class="tech">Python, Flask, VirusTotal API, Docker, 50 tests; forwards verdicts to SOAR-Lite</p>
             <div class="links">
               <a href="https://email-threat-analyzer-zt7f.onrender.com">Live demo</a>
               <a href="https://github.com/AhmedDAH1/email-threat-analyzer">Source</a>
@@ -333,7 +333,7 @@
           </div>
           <div>
             <p>Reads SSH, Apache and syslog files to spot brute-force attempts, port scans and unusual activity, then correlates events across sources to surface attack patterns. Includes a real-time dashboard, AbuseIPDB enrichment, email alerts and forwarding to SOAR-Lite.</p>
-            <p class="tech">Python, Flask, WebSockets, SQLite, AbuseIPDB API, Docker, 30 tests</p>
+            <p class="tech">Python, Flask, WebSockets, SQLite, AbuseIPDB API, Docker, 36 tests</p>
             <div class="links">
               <a href="https://log-threat-detector.onrender.com">Live demo</a>
               <a href="https://github.com/AhmedDAH1/log_threat_detector">Source</a>

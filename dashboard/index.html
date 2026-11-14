@@ -182,10 +182,10 @@
 
     <section class="grid kpis" aria-label="Summary">
       <div class="card kpi"><div class="label">Connected projects</div><div class="value">7</div><div class="note">attack, detect, analyse, respond, assist</div></div>
-      <div class="card kpi"><div class="label">Automated tests</div><div class="value" id="kpi-tests">423</div><div class="note">across five repos, plus Sigma test cases and lab checks</div></div>
+      <div class="card kpi"><div class="label">Automated tests</div><div class="value" id="kpi-tests">459</div><div class="note">across five repos, plus Sigma test cases and lab checks</div></div>
       <div class="card kpi"><div class="label">CI passing</div><div class="value" id="kpi-ci">–</div><div class="note" id="kpi-ci-note">latest run on main, live</div></div>
       <div class="card kpi"><div class="label">Detection rules</div><div class="value">4</div><div class="note">2 Suricata, 2 Sigma, each tested on real attack traffic and a benign baseline</div></div>
-      <div class="card kpi"><div class="label">Attacks on the AI</div><div class="value">136</div><div class="note">prompt injections, run against two models</div></div>
+      <div class="card kpi"><div class="label">Attacks on the AI</div><div class="value">136</div><div class="note">prompt injections, run against three models</div></div>
     </section>
 
     <section class="card panel" aria-labelledby="flow-h">
@@ -248,16 +248,16 @@ const PROJECTS = [
     result: "8 test cases incl. benign baselines", tests: null, testsNote: "8 cases", release: null },
   { repo: "log_threat_detector", workflow: "tests.yml", name: "Log Threat Detector", stage: "Analyse",
     role: "SIEM-style detection across SSH, web and firewall logs",
-    result: "Brute force, scans and scanners", tests: 30, release: "v1.2.0", demo: "https://log-threat-detector.onrender.com" },
+    result: "Brute force, scans and scanners", tests: 36, release: "v1.3.0", demo: "https://log-threat-detector.onrender.com" },
   { repo: "email-threat-analyzer", workflow: "ci.yml", name: "Email Threat Analyzer", stage: "Analyse",
     role: "Phishing detection engine scoring emails 0–100",
-    result: "73% of 414 real phish flagged", tests: 48, release: "v1.2.0", demo: "https://email-threat-analyzer-zt7f.onrender.com" },
+    result: "73% of 414 real phish flagged", tests: 50, release: "v1.3.0", demo: "https://email-threat-analyzer-zt7f.onrender.com" },
   { repo: "soar-lite", workflow: "ci.yml", name: "SOAR-Lite", stage: "Respond",
     role: "Incidents, IOC extraction, enrichment and playbooks",
-    result: "2 vulnerabilities found and fixed", tests: 88, release: "v2.0.0", demo: "https://soar-lite.onrender.com" },
+    result: "Logs to AI-triaged incidents; 2 vulns fixed", tests: 116, release: "v3.2.0", demo: "https://soar-lite.onrender.com" },
   { repo: "ai-alert-triage", workflow: "ci.yml", name: "AI Alert Triage", stage: "Assist",
     role: "AI-suggested verdicts, red-teamed against prompt injection",
-    result: "Attacks succeeding: 68% → 2%", tests: 63, release: "v0.2.1", demo: "https://ahmeddah1.github.io/ai-triage/", demoLabel: "Explorer" },
+    result: "Attacks succeeding: 68% → 2%", tests: 63, release: "v0.2.3", demo: "https://ahmeddah1.github.io/ai-triage/", demoLabel: "Explorer" },
   { repo: "soc-lab", workflow: "ci.yml", name: "SOC Lab", stage: "Orchestrate",
     role: "The whole pipeline in one command, run by CI on every push",
     result: "5 of 5 end-to-end checks", tests: null, testsNote: "5 checks", release: null },
@@ -281,7 +281,7 @@ const COVERAGE = [
   ["T1110", "Brute Force", "Log Threat Detector, including guesses at usernames that don't exist", "Sample SSH logs; live in SOC Lab"],
   ["T1595", "Active Scanning", "Log Threat Detector (Nikto, sqlmap, Nmap, masscan user agents)", "Sample web server logs"],
   ["T1566", "Phishing", "Email Threat Analyzer", "414 real phishing emails and a labelled benign control"],
-  ["AML.T0051", "LLM Prompt Injection (MITRE ATLAS)", "AI Alert Triage guards", "136 attacks against two models"],
+  ["AML.T0051", "LLM Prompt Injection (MITRE ATLAS)", "AI Alert Triage guards", "136 attacks against three models"],
 ];
 const byRepo = Object.fromEntries(PROJECTS.map(p => [p.repo, p]));
 const live = {};   // repo -> { run, release }
