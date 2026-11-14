@@ -194,7 +194,7 @@
       <div class="lab">
         <div class="what">
           <b><a href="https://github.com/AhmedDAH1/soc-lab">SOC Lab</a></b> <span id="ci-soc-lab"></span>
-          <p>Runs the whole pipeline with one command (Docker Compose), and CI runs it on every push. Every run checks:</p>
+          <p>Runs the whole pipeline with one command (Docker Compose). Its live console shows every step as it happens: you start each attack yourself and watch the packets, the rules firing, the signed alerts and the incidents, or upload your own logs and emails. CI runs it on every push. Every run checks:</p>
         </div>
         <ul class="checks" id="checks"></ul>
       </div>
@@ -259,8 +259,8 @@ const PROJECTS = [
     role: "AI-suggested verdicts, red-teamed against prompt injection",
     result: "Attacks succeeding: 68% → 2%", tests: 63, release: "v0.2.3", demo: "https://ahmeddah1.github.io/ai-triage/", demoLabel: "Explorer" },
   { repo: "soc-lab", workflow: "ci.yml", name: "SOC Lab", stage: "Orchestrate",
-    role: "The whole pipeline in one command, run by CI on every push",
-    result: "5 of 5 end-to-end checks", tests: null, testsNote: "5 checks", release: null },
+    role: "The whole pipeline in one command, with a live console that shows each step; run by CI on every push",
+    result: "11 of 11 end-to-end checks", tests: null, testsNote: "11 checks", release: null },
 ];
 const STAGES = [
   ["1 · Attack", ["network-scanner"], { "network-scanner": "SYN scans, banner grabs, CVE matching" }],
@@ -275,10 +275,13 @@ const LAB_CHECKS = [
   "Log Threat Detector: SSH brute force",
   "Email Threat Analyzer: phishing verdict",
   "Scanner's address extracted as an IOC in SOAR-Lite",
+  "Uploaded logs: brute force and port scan linked into one attack",
+  "Uploaded emails: phishing opens incidents, through the live console",
+  "Live console saw every step: scan, both rules firing, signed alerts, incidents",
 ];
 const COVERAGE = [
   ["T1046", "Network Service Discovery", "2 Suricata rules · 2 Sigma rules · Log Threat Detector", "Recorded NetScan scans, a benign baseline, and live in SOC Lab"],
-  ["T1110", "Brute Force", "Log Threat Detector, including guesses at usernames that don't exist", "Sample SSH logs; live in SOC Lab"],
+  ["T1110", "Brute Force", "Log Threat Detector, including guesses at usernames that don't exist", "Sample SSH logs, replayed in SOC Lab"],
   ["T1595", "Active Scanning", "Log Threat Detector (Nikto, sqlmap, Nmap, masscan user agents)", "Sample web server logs"],
   ["T1566", "Phishing", "Email Threat Analyzer", "414 real phishing emails and a labelled benign control"],
   ["AML.T0051", "LLM Prompt Injection (MITRE ATLAS)", "AI Alert Triage guards", "136 attacks against three models"],

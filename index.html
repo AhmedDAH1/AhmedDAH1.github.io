@@ -251,6 +251,7 @@
           <p>I built both sides: a network scanner, the detection rules that catch it, and the response platform its alerts land in. SOC Lab runs them together. NetScan scans a decoy server, Suricata recognises the scan with my rules, and SOAR-Lite opens incidents with the scanner's address as an indicator, alongside findings from my log and phishing analyzers.</p>
           <ul class="facts">
             <li>Every project is built from its published release; one command, <code>./lab.sh</code>, runs everything and checks each incident arrived</li>
+            <li>A live console (<code>./lab.sh --watch</code>) shows each step as it happens: start each attack yourself and watch the packets, the Suricata rules firing, the signed alerts and the incidents, or upload your own logs and emails</li>
             <li>CI runs the whole lab on every push, so a change that breaks the pipeline in any project fails the build</li>
           </ul>
           <div class="links">
@@ -258,7 +259,7 @@
           </div>
         </div>
         <figure class="shot" style="margin:0">
-          <img src="https://ahmeddah1.github.io/screenshots/soc-lab.png" alt="SOAR-Lite incident list after a SOC Lab run: two NetScan detections from Suricata, brute-force alerts from Log Threat Detector and a phishing verdict from Email Threat Analyzer">
+          <a href="https://ahmeddah1.github.io/screenshots/soc-lab-console.png" title="Open the full-size screenshot"><img src="https://ahmeddah1.github.io/screenshots/soc-lab-console.png" alt="The SOC Lab live console after a run: NetScan sent 102 probes, the target answered on ports 22 and 80, Suricata fired 2 rules, and SOAR-Lite holds 11 incidents from Suricata, the log detector and the email analyzer; a forged alert was refused"></a>
         </figure>
       </div>
     </section>
